@@ -2,13 +2,13 @@ pipeline{
     agent any
 
     parameters {
-    gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
-  }
+        string(name: "TESTSTRING", description: "Some description")
+    }
   
     stages{
         stage("A"){
             steps{
-                echo "========executing A========"
+                echo "========executing A======== ${params.TESTSTRING}"
             }
             post{
                 always{
