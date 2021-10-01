@@ -1,14 +1,10 @@
 pipeline{
     agent any
-
-    parameters {
-        string(name: "TESTSTRING", description: "Some description")
-    }
   
     stages{
         stage("A"){
             steps{
-                echo "========executing A======== ${params.TESTSTRING}"
+                echo "========executing A======== ${params}"
             }
             post{
                 always{
