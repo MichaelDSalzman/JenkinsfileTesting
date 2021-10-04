@@ -1,11 +1,14 @@
 pipeline{
-    agent any
+    agent any //TODO
   
     stages{
         stage("Install dependencies"){
             steps{
                 echo "========Installing dependencies======== ${params}"
+                sh "pwd"
             }
+
+            //TODO Leaving this as an example
             post{
                 always{
                     echo "========always========"
