@@ -2,9 +2,9 @@ pipeline{
     agent any
   
     stages{
-        stage("A"){
+        stage("Install dependencies"){
             steps{
-                echo "========executing A======== ${params}"
+                echo "========Installing dependencies======== ${params}"
             }
             post{
                 always{
@@ -16,6 +16,26 @@ pipeline{
                 failure{
                     echo "========A execution failed========"
                 }
+            }
+        }
+        stage("NexusIQ Scan"){
+            steps{
+                echo "========executing NexusIQ scan======== ${params}"
+            }
+        }
+        stage("Unit test"){
+            steps{
+                echo "========executing unit tests======== ${params}"
+            }
+        }
+        stage("SonarQube scan"){
+            steps{
+                echo "========executing SonarQube scan======== ${params}"
+            }
+        }
+        stage("Package"){
+            steps{
+                echo "========Packaging======== ${params}"
             }
         }
     }
