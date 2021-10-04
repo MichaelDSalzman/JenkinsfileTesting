@@ -17,6 +17,10 @@ pipeline{
 
                     echo "${fullName}"
                 }
+                withCredentials([string(credentialsId: 'mysecret', variable: 'TOKEN')]) {
+                  echo "MY SECRET IS:"
+                  echo "${TOKEN}"
+                }
             }
         }
         stage("Install dependencies"){
