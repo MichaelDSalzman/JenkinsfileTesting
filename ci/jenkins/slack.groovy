@@ -1,5 +1,9 @@
 def sendSuccessMessage() {
-  echo "Called from slack"
+  echo "SUCCESS - Called from slack"
+}
+
+def sendFailureMessage() {
+  echo "FAILURE - Called from slack"
 }
 
 return this

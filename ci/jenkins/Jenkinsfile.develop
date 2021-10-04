@@ -73,9 +73,6 @@ pipeline{
         }
         failure{
             echo "========pipeline execution failed========"
-            script {
-                slackLib.sendFailureMessage()
-            }
         }
     }
 }
