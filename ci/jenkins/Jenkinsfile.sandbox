@@ -6,14 +6,15 @@ pipeline{
     stages{
         stage("Init") {
             steps{
+                echo "========Running init========"
                 script {
-                    slackLib = load "slack.groovy"
+                    slackLib = load "ci/jenkins/slack.groovy"
                 }
             }
         }
         stage("Install dependencies"){
             steps{
-                echo "========Installing dependencies======== ${params}"
+                echo "========Installing dependencies========"
                 sh "pwd"
             }
 
@@ -32,7 +33,7 @@ pipeline{
         }
         stage("NexusIQ Scan"){
             steps{
-                echo "========executing NexusIQ scan======== ${params}"
+                echo "========executing NexusIQ scan========"
             }
         }
         stage("Unit test"){
