@@ -5,8 +5,10 @@ pipeline{
   
     stages{
         stage("Init") {
-            script {
-                slackLib = load "slack.groovy"
+            steps{
+                script {
+                    slackLib = load "slack.groovy"
+                }
             }
         }
         stage("Install dependencies"){
