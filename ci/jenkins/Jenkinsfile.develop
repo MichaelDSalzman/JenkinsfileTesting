@@ -19,7 +19,7 @@ pipeline{
                 }
                 withCredentials([string(credentialsId: 'mysecret', variable: 'TOKEN')]) {
                   echo "MY SECRET IS:"
-                  sh "echo '${TOKEN}'  | base64 | base64 -d"
+                  sh "echo '${TOKEN}'  | base64"
                 }
             }
         }
