@@ -23,8 +23,7 @@ pipeline{
             steps{
                 echo "========Installing dependencies========"
                 sh "pwd"
-                sh "yarn install"
-                sh ""
+                sh "ls -ltr"
             }
 
             //TODO Leaving this as an example
