@@ -57,7 +57,9 @@ pipeline{
         }
         success{
             echo "========pipeline executed successfully ========"
-            slackLib.sendSuccessMessage()
+            script {
+                slackLib.sendSuccessMessage()
+            }
         }
         failure{
             echo "========pipeline execution failed========"
