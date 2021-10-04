@@ -1,7 +1,14 @@
+def slackLib
+
 pipeline{
     agent any //TODO
   
     stages{
+        stage("Init") {
+            script {
+                slackLib = load "slack.groovy"
+            }
+        }
         stage("Install dependencies"){
             steps{
                 echo "========Installing dependencies======== ${params}"
@@ -48,6 +55,7 @@ pipeline{
         }
         success{
             echo "========pipeline executed successfully ========"
+            slackLib.sendSuccessMessage()
         }
         failure{
             echo "========pipeline execution failed========"
