@@ -8,6 +8,7 @@ pipeline{
     stages{
         stage("Init") {
             steps{
+                echo "BRANCH IS ${GIT_BRANCH}"
                 echo "========Running init========"
                 script {
                     slackLib = load "ci/jenkins/slack.groovy"
