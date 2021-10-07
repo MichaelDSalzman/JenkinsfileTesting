@@ -8,6 +8,8 @@ pipeline{
     stages{
         stage("Init") {
             steps{
+                buildName "${GERRIT_CHANGE_SUBJECT}"
+                buildDescription "${GIT_BRANCH} - Executed @ ${NODE_NAME}"
                 echo "BRANCH IS ${GIT_BRANCH}"
                 echo "========Running init========"
                 script {
