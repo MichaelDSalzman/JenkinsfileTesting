@@ -1,6 +1,6 @@
 def slackLib
 
-List<String> completedSteps = []
+def completedSteps = []
 
 pipeline{
     agent any //TODO
