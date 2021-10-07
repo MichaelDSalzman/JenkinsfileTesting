@@ -1,5 +1,7 @@
 def slackLib
 
+List<String> completedSteps = []
+
 pipeline{
     agent any //TODO
   
@@ -18,6 +20,11 @@ pipeline{
                     echo "${fullName}"
                 }
             }
+            post {
+                success{
+                    completedSteps << "INIT"
+                }
+            }
         }
         stage("Install dependencies"){
             steps{
@@ -27,15 +34,10 @@ pipeline{
             }
 
             //TODO Leaving this as an example
-            post{
-                always{
-                    echo "========always========"
-                }
+            
+            post {
                 success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
+                    completedSteps << "INSTALL DEPENDENCIES"
                 }
             }
         }
@@ -43,20 +45,40 @@ pipeline{
             steps{
                 echo "========executing NexusIQ scan========"
             }
+            post {
+                success{
+                    completedSteps << "NEXUS SCAN"
+                }
+            }
         }
         stage("Unit test"){
             steps{
                 echo "========executing unit tests======== ${params}"
+            }
+            post {
+                success{
+                    completedSteps << "UNIT TEST"
+                }
             }
         }
         stage("SonarQube scan"){
             steps{
                 echo "========executing SonarQube scan======== ${params}"
             }
+            post {
+                success{
+                    completedSteps << "SONAR SCAN"
+                }
+            }
         }
         stage("Package"){
             steps{
                 echo "========Packaging======== ${params}"
+            }
+            post {
+                success{
+                    completedSteps << "PACKAGE"
+                }
             }
         }
     }
@@ -67,13 +89,13 @@ pipeline{
         success{
             echo "========pipeline executed successfully ========"
             script {
-                slackLib.sendSuccessMessage()
+                slackLib.sendSuccessMessage(completedSteps.toString())
             }
         }
         failure{
             echo "========pipeline execution failed========"
             script {
-                slackLib.sendFailureMessage()
+                slackLib.sendFailureMessage("It failed")
             }
         }
     }
