@@ -22,7 +22,9 @@ pipeline{
             }
             post {
                 success{
-                    completedSteps << "INIT"
+                    script {
+                        completedSteps << "INIT"
+                    }
                 }
             }
         }
