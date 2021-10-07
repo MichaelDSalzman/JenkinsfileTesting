@@ -39,7 +39,9 @@ pipeline{
             
             post {
                 success{
-                    completedSteps << "INSTALL DEPENDENCIES"
+                    script {
+                        completedSteps << "INSTALL DEPENDENCIES"
+                    }
                 }
             }
         }
@@ -49,7 +51,9 @@ pipeline{
             }
             post {
                 success{
-                    completedSteps << "NEXUS SCAN"
+                    script {
+                        completedSteps << "NEXUS SCAN"
+                    }
                 }
             }
         }
@@ -59,7 +63,9 @@ pipeline{
             }
             post {
                 success{
-                    completedSteps << "UNIT TEST"
+                    script {
+                        completedSteps << "UNIT TEST"
+                    }
                 }
             }
         }
@@ -69,7 +75,9 @@ pipeline{
             }
             post {
                 success{
-                    completedSteps << "SONAR SCAN"
+                    script {
+                        completedSteps << "SONAR SCAN"
+                    }
                 }
             }
         }
@@ -79,7 +87,9 @@ pipeline{
             }
             post {
                 success{
-                    completedSteps << "PACKAGE"
+                    script {
+                        completedSteps << "PACKAGE"
+                    }
                 }
             }
         }
