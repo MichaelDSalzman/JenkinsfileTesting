@@ -63,7 +63,6 @@ pipeline{
         stage("Unit test"){
             steps{
                 echo "========executing unit tests======== ${params}"
-                echo "========executing unit tests======== ${params}"
                 echo "Publishing report"
                 publishHTML (target : [allowMissing: false,
                     alwaysLinkToLastBuild: true,
@@ -72,8 +71,6 @@ pipeline{
                     reportFiles: 'report.html',
                     reportName: 'My Reports',
                     reportTitles: 'The Report'])
-
-            }
             }
             post {
                 success{
