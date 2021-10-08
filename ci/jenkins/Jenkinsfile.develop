@@ -47,6 +47,14 @@ pipeline{
         stage("Unit test"){
             steps{
                 echo "========executing unit tests======== ${params}"
+                publishHTML (target : [allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'reports',
+                    reportFiles: 'report.html',
+                    reportName: 'My Reports',
+                    reportTitles: 'The Report'])
+
             }
         }
         stage("SonarQube scan"){
