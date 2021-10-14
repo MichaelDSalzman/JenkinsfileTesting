@@ -83,6 +83,7 @@ pipeline{
         stage("SonarQube scan"){
             steps{
                 echo "========executing SonarQube scan======== ${params}"
+                sh "npm run sonar"   
             }
             post {
                 success{

@@ -1,0 +1,23 @@
+{
+  "name": "jenkinsfiletesting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sonar": "node tool/sonar.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichaelDSalzman/JenkinsfileTesting.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MichaelDSalzman/JenkinsfileTesting/issues"
+  },
+  "homepage": "https://github.com/MichaelDSalzman/JenkinsfileTesting#readme",
+  "devDependencies": {
+    "sonarqube-scanner": "^2.8.1"
+  }
+}
