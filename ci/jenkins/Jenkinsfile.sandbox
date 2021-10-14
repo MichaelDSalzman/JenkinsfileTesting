@@ -34,8 +34,7 @@ pipeline{
         stage("Install dependencies"){
             steps{
                 echo "========Installing dependencies========"
-                sh "pwd"
-                sh "ls -ltr"
+                sh "npm install"
             }
 
             //TODO Leaving this as an example
