@@ -16,13 +16,6 @@ pipeline{
                 script {
                     slackLib = load "ci/jenkins/slack.groovy"
                     sonarLib = load "ci/jenkins/sonar.groovy"
-
-                    String fName = "MIKE"
-                    String lName = "SALZMAN"
-
-                    fullName = [fName, lName].join(", ")
-
-                    echo "${fullName}"
                 }
             }
             post {
@@ -85,7 +78,10 @@ pipeline{
             steps{
                 echo "========executing SonarQube scan======== ${params}"
                 script {
-                    sonarLib.scan()
+                    sonarLib.scan((def message) -> {
+                        slackLib.sendFailureMessage(message)
+                        throw new Exception("SonarQube scan failure")
+                    })
                 }
             }
             post {
