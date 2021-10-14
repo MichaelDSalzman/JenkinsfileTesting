@@ -78,7 +78,7 @@ pipeline{
             steps{
                 echo "========executing SonarQube scan======== ${params}"
                 script {
-                    sonarLib.scan((def message) -> {
+                    sonarLib.scan({String message -> 
                         slackLib.sendFailureMessage(message)
                         throw new Exception("SonarQube scan failure")
                     })
