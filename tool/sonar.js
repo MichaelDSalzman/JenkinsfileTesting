@@ -1,5 +1,7 @@
 const verifier = require("sonarqube-verify/lib/sonarqube-verify");
 
+const pkg = require(process.cwd() + "/package.json");
+
 const projectKey =
   process.env.SONAR_PROJECT_KEY || pkg.name.replace("@", "").replace("/", ":");
 
