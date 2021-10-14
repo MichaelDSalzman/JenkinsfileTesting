@@ -79,30 +79,30 @@ pipeline{
                 }
             }
         }
-        stage("SonarQube scan"){
-            steps{
-                echo "========executing SonarQube scan======== ${params}"
-                withSonarQubeEnv("SonarEC2") {
-                    script {
-                        def statusCode = sh(script: "npm run sonar", returnStatus:true)
-                        echo "STATUS CODE IS ${statusCode}"
-                    }
-                }  
-            }
-            post {
-                success{
-                    script {
-                        completedSteps << "SONAR SCAN"
-                    }
-                }
-            }
-        }
+        // stage("SonarQube scan"){
+        //     steps{
+        //         echo "========executing SonarQube scan======== ${params}"
+        //         withSonarQubeEnv("SonarEC2") {
+        //             script {
+        //                 def statusCode = sh(script: "npm run sonar", returnStatus:true)
+        //                 echo "STATUS CODE IS ${statusCode}"
+        //             }
+        //         }  
+        //     }
+        //     post {
+        //         success{
+        //             script {
+        //                 completedSteps << "SONAR SCAN"
+        //             }
+        //         }
+        //     }
+        // }
         stage("SonarQube scan + verify"){
             steps{
                 echo "========executing SonarQube scan======== ${params}"
                 withSonarQubeEnv("SonarEC2") {
                     script {
-                        def statusCode = sh(script: "npm run sonarVerify", returnStatus:true)
+                        def statusCode = sh(script: "SONAR_URL=${SONAR_HOST_URL} SONAR_LOGIN=${SONAR_AUTH_TOKEN} npm run sonarVerify", returnStatus:true)
                         echo "STATUS CODE IS ${statusCode}"
                     }
                 }  
