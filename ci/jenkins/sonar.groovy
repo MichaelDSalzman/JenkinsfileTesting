@@ -5,6 +5,9 @@ def scan() {
 
           if(statusCode != 0) {
               throw new Exception("SonarQube scan failure")
+
+              def slackLib = load "ci/jenkins/slack.groovy"
+              slackLib.sendFailureMessage("SonarQube failed")
           }
       }
   } 
