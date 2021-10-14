@@ -1,10 +1,10 @@
 def scan(def onFailure) {
   withSonarQubeEnv("SonarEC2") {
       script {
-          def statusCode = sh(script: "SONAR_URL=${SONAR_HOST_URL} SONAR_LOGIN=${SONAR_AUTH_TOKEN} npm run sonarVerify | tee sonar.out", returnStatus:true )
+          // def statusCode = sh(script: "SONAR_URL=${SONAR_HOST_URL} SONAR_LOGIN=${SONAR_AUTH_TOKEN} npm run sonarVerify", returnStatus:true )
+          def statusCode = sh(script: "npm run sonar", returnStatus:true )
           if(statusCode != 0) {
-
-              onFailure("SonarQube failed. See http://${SONAR_HOST_URL}/dashboard?id=TODO for more details")
+              onFailure("SonarQube failed. See http://${SONAR_HOST_URL} for more details")
           }
       }
   } 
