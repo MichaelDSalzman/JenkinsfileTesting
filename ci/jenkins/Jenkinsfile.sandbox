@@ -83,7 +83,8 @@ pipeline{
             steps{
                 echo "========executing SonarQube scan======== ${params}"
                 withSonarQubeEnv("SonarEC2") {
-                    sh "npm run sonar" 
+                    def statusCode = sh(script: "npm run sonar", returnStatus:true)
+                    echo "STATUS CODE IS ${statusCode}"
                 }  
             }
             post {
