@@ -1,4 +1,5 @@
 def slackLib
+def sonarLib
 
 def completedSteps = []
 
@@ -14,6 +15,7 @@ pipeline{
                 echo "========Running init========"
                 script {
                     slackLib = load "ci/jenkins/slack.groovy"
+                    sonarLib = load "ci/jenkins/sonar.groovy"
 
                     String fName = "MIKE"
                     String lName = "SALZMAN"
@@ -79,37 +81,10 @@ pipeline{
                 }
             }
         }
-        // stage("SonarQube scan"){
-        //     steps{
-        //         echo "========executing SonarQube scan======== ${params}"
-        //         withSonarQubeEnv("SonarEC2") {
-        //             script {
-        //                 def statusCode = sh(script: "npm run sonar", returnStatus:true)
-        //                 echo "STATUS CODE IS ${statusCode}"
-        //             }
-        //         }  
-        //     }
-        //     post {
-        //         success{
-        //             script {
-        //                 completedSteps << "SONAR SCAN"
-        //             }
-        //         }
-        //     }
-        // }
-        stage("SonarQube scan + verify"){
+        stage("SonarQube scan"){
             steps{
                 echo "========executing SonarQube scan======== ${params}"
-                withSonarQubeEnv("SonarEC2") {
-                    script {
-                        def statusCode = sh(script: "SONAR_URL=${SONAR_HOST_URL} SONAR_LOGIN=${SONAR_AUTH_TOKEN} npm run sonarVerify", returnStatus:true)
-                        echo "STATUS CODE IS ${statusCode}"
-
-                        if(statusCode != 0) {
-                            throw new Exception("SonarQube scan failure")
-                        }
-                    }
-                }  
+                sonarLib.scan()
             }
             post {
                 success{
