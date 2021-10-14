@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sonarVerify": "sonarqube-verify",
-    "sonar": "sonar-scanner"
+    "sonar": "sonar-scanner",
+    "sonarMike": "node run tool/sonar.js"
   },
   "repository": {
     "type": "git",
