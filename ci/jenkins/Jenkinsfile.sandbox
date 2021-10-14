@@ -97,6 +97,22 @@ pipeline{
                 }
             }
         }
+        stage("SonarQube scan + verify"){
+            steps{
+                echo "========executing SonarQube scan======== ${params}"
+                withSonarQubeEnv("SonarEC2") {
+                        def statusCode = sh(script: "npm run sonarVerify", returnStatus:true)
+                        echo "STATUS CODE IS ${statusCode}"
+                }  
+            }
+            post {
+                success{
+                    script {
+                        completedSteps << "SONAR SCAN"
+                    }
+                }
+            }
+        }
         stage("Package"){
             steps{
                 echo "========Packaging======== ${params}"
