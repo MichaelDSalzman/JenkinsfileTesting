@@ -4,9 +4,6 @@ def completedSteps = []
 
 pipeline{
     agent any //TODO
-    tools {
-        nodejs "node"
-    }
   
     stages{
         stage("Init") {
