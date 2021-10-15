@@ -1,9 +1,9 @@
 def scan(def onFailure) {
-  withSonarQubeEnv("SonarEC2") {
+  withSonarQubeEnv {
     sh(script: "npm run sonar" )
   } 
 
-    withSonarQubeEnv("SonarEC2") {
+    withSonarQubeEnv {
       script {
           timeout(time: 1, unit: 'HOURS') {
 
