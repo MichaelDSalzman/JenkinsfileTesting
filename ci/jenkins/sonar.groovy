@@ -3,12 +3,16 @@ def scan(def onFailure) {
       script {
         timeout(time: 1, unit: 'HOURS') {
             sh(script: "npm run sonar" )
-            def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+            
+        }
+      }
+
+      script {
+          def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
 
             if (qg.status != 'OK') {
                 onFailure("Pipeline aborted due to sonar quality gate failure: ${qg.status}")
             }
-        }
       }
   } 
 
