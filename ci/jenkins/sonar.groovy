@@ -8,6 +8,13 @@ def scan(def onFailure) {
         //   if(statusCode != 0) {
         //       onFailure("SonarQube failed. See http://${SONAR_HOST_URL} for more details")
         //   }
+        }
+      }
+  } 
+
+    withSonarQubeEnv("SonarEC2") {
+      script {
+          timeout(time: 1, unit: 'HOURS') {
 
          // Just in case something goes wrong, pipeline will be killed after a timeout
             def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
