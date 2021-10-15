@@ -9,8 +9,9 @@ pipeline{
     stages{
         stage("Init") {
             steps{
-                buildName "${GIT_BRANCH}"
-                buildDescription "Executed @ ${NODE_NAME}"
+                // buildName "${GIT_BRANCH}"
+                // buildDescription "Executed @ ${NODE_NAME}"
+
                 echo "BRANCH IS ${GIT_BRANCH}"
                 echo "========Running init========"
                 script {
