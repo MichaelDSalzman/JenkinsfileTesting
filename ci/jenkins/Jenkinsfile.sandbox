@@ -81,7 +81,7 @@ pipeline{
                 script {
                     sonarLib.scan({String message -> 
                         slackLib.sendFailureMessage(message)
-                        throw new Exception("SonarQube scan failure")
+                        error message
                     })
                 }
             }
