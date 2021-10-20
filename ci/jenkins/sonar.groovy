@@ -1,6 +1,6 @@
 def scan(def onFailure) {
   withSonarQubeEnv {
-    sh(script: "SONARQUBE_SCANNER_PARAMS='{\"sonar.version\":\"TEST\"}' npm run sonar" )
+    sh(script: "npm run sonar" )
   } 
 
     withSonarQubeEnv {
