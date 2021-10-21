@@ -28,6 +28,8 @@ def sendDetailedMessage(String color, String title, String titleLink, String mes
         fields: fields
       ]
   ]
+
+  slackSend(channel: "#general", attachments: attachments)
 }
 
 return this
