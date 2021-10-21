@@ -3,4 +3,7 @@ function a() {
   }
 
   const a = 1 ? 2 == 3 : false;
+  return true;
+
+  const b = 5;
 }
