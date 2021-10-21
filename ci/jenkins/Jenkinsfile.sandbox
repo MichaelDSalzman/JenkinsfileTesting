@@ -86,7 +86,7 @@ pipeline{
                             "$BUILD_URL",
                             message,
                             failures.collect {
-                                return [title: it.metricKey, value: "Expected: ${it.comparator} ${errorThreshold}\nActual: ${it.actualValue}", short: false]
+                                return [title: it.metricKey, value: "Expected: ${it.comparator} ${it.errorThreshold}\nActual: ${it.actualValue}", short: false]
                             }
                         )
                         error message
