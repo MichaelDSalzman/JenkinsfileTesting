@@ -79,13 +79,13 @@ pipeline{
             steps{
                 echo "========executing SonarQube scan========"
                 script {
-                    sonarLib.scan({String message, List failures ->
+                    sonarLib.scan({String message, List failures, String sonarDashboardUrl ->
                         slackLib.sendDetailedMessage(
                             "danger", 
                             "Sandbox build failed on branch $GIT_BRANCH",
                             "$BUILD_URL",
                             message,
-                            failures.collect {
+                            [[title: "Report URL", value: sonarDashboardUrl]] + failures.collect {
                                 def comparator = it.comparator
                                 switch (comparator) {
                                     case "GT":

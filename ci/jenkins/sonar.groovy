@@ -27,7 +27,7 @@ def scan(def onFailure) {
           // Filter out conditions that failed
           List failures = QUALITY_MAP['projectStatus']['conditions'].findAll { it['status'] == 'ERROR' }//.collect {
 
-          onFailure("Sonar quality failures $SONAR_DASHBOARD_URL:", failures)
+          onFailure("Sonar quality failures:", failures, $SONAR_DASHBOARD_URL)
         }
       }
     }
