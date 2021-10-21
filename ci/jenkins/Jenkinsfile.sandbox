@@ -13,7 +13,7 @@ pipeline{
                     slackLib = load "ci/jenkins/slack.groovy"
                     sonarLib = load "ci/jenkins/sonar.groovy"
 
-                    load "ci/jenkins/sandbox.env"
+                    load "ci/jenkins/sandbox.groovy"
                 }
             }
         }
@@ -45,7 +45,20 @@ pipeline{
             steps{
                 echo "========executing SonarQube scan========"
                 script {
-                    sonarLib.scan(env.sonar_failure_fn)
+                    fn = {String message, List failures, String sonarDashboardUrl ->
+                        slackLib.sendDetailedMessage(
+                            [
+                                color: env.sonar_failure_slack_color, 
+                                title: env.sonar_failure_slack_title,
+                                title_link: env.sonar_failure_slack_title_link,
+                                text: message,
+                                fields: [[title: "Report URL", value: sonarDashboardUrl]] + sonarLib.mapSonarFailuresToSlackFields(failures)
+                            ]
+                        )
+                        error message
+                    }
+
+                    sonarLib.scan(fn)
                 }
             }
         }
