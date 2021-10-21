@@ -25,7 +25,7 @@ def scan(def onFailure) {
           List failures = QUALITY_MAP['projectStatus']['conditions'].findAll { it['status'] == 'ERROR' }//.collect {
             //"${it['metricKey']} is in an error state. Threshold must be ${it.comparator} ${it.errorThreshold}. Actual value is ${it.actualValue}."
           //}
-          onFailure("Pipeline aborted due to \<$SONAR_DASHBOARD_URL|sonar quality gate\> failures:", failures)
+          onFailure("Pipeline aborted due to <$SONAR_DASHBOARD_URL|sonar quality gate> failures:", failures)
         }
       }
     }

@@ -82,7 +82,7 @@ pipeline{
                     sonarLib.scan({String message, List failures ->
                         slackLib.sendDetailedMessage(
                             "danger", 
-                            "$GIT_BRANCH build failed",
+                            "Sandbox $GIT_BRANCH build failed",
                             "$BUILD_URL",
                             message,
                             failures.collect {
