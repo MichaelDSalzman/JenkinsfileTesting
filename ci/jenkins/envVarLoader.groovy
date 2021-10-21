@@ -3,7 +3,7 @@ def loadEnvProps(String env) {
   keys = props.keySet()
   for (key in keys) {
     value = props["${key}"]
-    env."${key} = "${value}"
+    env."${key}" = "${value}"
   }
 }
 
