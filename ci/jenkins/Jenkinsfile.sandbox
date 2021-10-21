@@ -1,8 +1,6 @@
 def slackLib
 def sonarLib
 
-def completedSteps = []
-
 pipeline{
     agent any //TODO
   
@@ -19,40 +17,16 @@ pipeline{
                     sonarLib = load "ci/jenkins/sonar.groovy"
                 }
             }
-            post {
-                success{
-                    script {
-                        completedSteps << "INIT"
-                    }
-                }
-            }
         }
         stage("Install dependencies"){
             steps{
                 echo "========Installing dependencies========"
                 sh "npm install"
             }
-
-            //TODO Leaving this as an example
-            
-            post {
-                success{
-                    script {
-                        completedSteps << "INSTALL DEPENDENCIES"
-                    }
-                }
-            }
         }
         stage("NexusIQ Scan"){
             steps{
                 echo "========executing NexusIQ scan========"
-            }
-            post {
-                success{
-                    script {
-                        completedSteps << "NEXUS SCAN"
-                    }
-                }
             }
         }
         stage("Unit test"){
@@ -66,13 +40,6 @@ pipeline{
                     reportFiles: 'report.html',
                     reportName: 'My Reports',
                     reportTitles: 'The Report'])
-            }
-            post {
-                success{
-                    script {
-                        completedSteps << "UNIT TEST"
-                    }
-                }
             }
         }
         stage("SonarQube scan"){
@@ -91,24 +58,10 @@ pipeline{
                     })
                 }
             }
-            post {
-                success{
-                    script {
-                        completedSteps << "SONAR SCAN"
-                    }
-                }
-            }
         }
         stage("Package"){
             steps{
                 echo "========Packaging======== ${params}"
-            }
-            post {
-                success{
-                    script {
-                        completedSteps << "PACKAGE"
-                    }
-                }
             }
         }
     }
@@ -119,13 +72,13 @@ pipeline{
         success{
             echo "========pipeline executed successfully ========"
             script {
-                slackLib.sendSuccessMessage(completedSteps.toString())
+                slackLib.sendSuccessMessage("Sandbox build successful on branch $GIT_BRANCH")
             }
         }
         failure{
             echo "========pipeline execution failed========"
             script {
-                slackLib.sendFailureMessage("It failed")
+                //slackLib.sendFailureMessage("It failed")
             }
         }
     }
