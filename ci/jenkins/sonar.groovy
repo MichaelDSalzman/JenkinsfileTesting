@@ -23,7 +23,7 @@ def scan(def onFailure) {
           def QUALITY_MAP = readJSON file: '.scannerwork/sonar-quality.json'
 
           // Filter out conditions that failed
-          List failures = QUALITY_MAP['projectStatus']['conditions'].findAll { it['status'] == 'ERROR' }//.collect {
+          List failures = QUALITY_MAP['projectStatus']['conditions'].findAll { it['status'] == 'ERROR' }
 
           onFailure("Sonar quality failures:", failures, SONAR_TASK_PROPERTIES.dashboardUrl)
         }
@@ -32,7 +32,7 @@ def scan(def onFailure) {
   }
 }
 
-def mapSonarFailureToSlackField(def failures) {
+def mapSonarFailuresToSlackFields(def failures) {
   return failures.collect {
     def comparator = it.comparator
     switch (comparator) {

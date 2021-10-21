@@ -1,5 +1,6 @@
 def slackLib
 def sonarLib
+def envVarLoader
 
 pipeline{
     agent any //TODO
@@ -12,6 +13,9 @@ pipeline{
                 script {
                     slackLib = load "ci/jenkins/slack.groovy"
                     sonarLib = load "ci/jenkins/sonar.groovy"
+                    envVarLoader = load "ci/jenkins/envVarLoader.groovy"
+
+                    envVarLoader.loadEnvProps("sandbox")
                 }
             }
         }
@@ -45,11 +49,13 @@ pipeline{
                 script {
                     sonarLib.scan({String message, List failures, String sonarDashboardUrl ->
                         slackLib.sendDetailedMessage(
-                            "danger", 
-                            "Sandbox build failed on branch $GIT_BRANCH",
-                            "$BUILD_URL",
-                            message,
-                            [[title: "Report URL", value: sonarDashboardUrl]] + sonarLib.mapSonarFailureToSlackField(failures)
+                            [
+                                color: env.sonar.failure.slack.color, 
+                                title: env.sonar.failure.slack.title,
+                                title_link: env.sonar.failure.slack.title_link,
+                                text: message,
+                                fields: [[title: "Report URL", value: sonarDashboardUrl]] + sonarLib.mapSonarFailuresToSlackFields(failures)
+                            ]
                         )
                         error message
                     })

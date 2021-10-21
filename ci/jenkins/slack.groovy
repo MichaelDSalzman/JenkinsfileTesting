@@ -6,15 +6,15 @@ def sendFailureMessage(String message) {
   slackSend(color:"danger", message: "<$BUILD_URL|Build> - $message")
 }
 
-def sendDetailedMessage(String color, String title, String titleLink, String message, List fields) {
+def sendDetailedMessage(Map parameters) {
   def attachments = [
       [
         mrkdwn_in: ["title", "text"],
-        color: color,
-        title: title,
-        title_link: titleLink,
-        text: message,
-        fields: fields
+        color: parameters.color,
+        title: parameters.title,
+        title_link: parameters.titleLink,
+        text: parameters.text,
+        fields: parameters.fields
       ]
   ]
 
