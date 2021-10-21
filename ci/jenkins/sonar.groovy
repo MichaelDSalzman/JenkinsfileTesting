@@ -43,7 +43,7 @@ def mapSonarFailureToSlackField(def failures) {
             comparator = "less than"
             break
     }
-    return [title: "Category: ${it.metricKey}", value: "Threshold: Should not be ${comparator} ${it.errorThreshold}\nActual: ${it.actualValue}", short: false]
+    return [title: "Category: ${it.metricKey.replaceAll('_', ' ')}", value: "Threshold: Should not be ${comparator} ${it.errorThreshold}\nActual: ${it.actualValue}", short: false]
   }
 }
 return this
