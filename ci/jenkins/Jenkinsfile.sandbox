@@ -48,9 +48,9 @@ pipeline{
                     sonarLib.scan({String message, List failures, String sonarDashboardUrl ->
                         slackLib.sendDetailedMessage(
                             [
-                                color: env["sonar.failure.slack.color"], 
-                                title: env["sonar.failure.slack.title"],
-                                title_link: env["sonar.failure.slack.title_link"],
+                                color: env.color, 
+                                title: env.title,
+                                title_link: env.title_link,
                                 text: message,
                                 fields: [[title: "Report URL", value: sonarDashboardUrl]] + sonarLib.mapSonarFailuresToSlackFields(failures)
                             ]
