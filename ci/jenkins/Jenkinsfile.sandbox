@@ -45,7 +45,21 @@ pipeline{
             steps{
                 echo "========executing SonarQube scan========"
                 script {
-                    sonarLib.scan(env.sonar_failure_fn)
+
+                    sonar_failure_fn = {String message, List failures, String sonarDashboardUrl ->
+                        slackLib.sendDetailedMessage(
+                            [
+                                color: env.sonar_failure_slack_color, 
+                                title: env.sonar_failure_slack_title,
+                                title_link: env.sonar_failure_slack_title_link,
+                                text: message,
+                                fields: [[title: "Report URL", value: sonarDashboardUrl]] + sonarLib.mapSonarFailuresToSlackFields(failures)
+                            ]
+                        )
+                        error message
+                    }
+
+                    sonarLib.scan(sonar_failure_fn)
                 }
             }
         }
