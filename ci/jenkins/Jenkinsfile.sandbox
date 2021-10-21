@@ -12,7 +12,6 @@ pipeline{
                 script {
                     slackLib = load "ci/jenkins/slack.groovy"
                     sonarLib = load "ci/jenkins/sonar.groovy"
-                    envVarLoader = load "ci/jenkins/envVarLoader.groovy"
 
                     load "ci/jenkins/sandbox.env"
                 }
