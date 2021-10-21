@@ -32,7 +32,7 @@ def scan(def onFailure) {
   }
 }
 
-def mapSonarFailureToSlackField(def sonarFailures) {
+def mapSonarFailureToSlackField(def failures) {
   return failures.collect {
     def comparator = it.comparator
     switch (comparator) {
