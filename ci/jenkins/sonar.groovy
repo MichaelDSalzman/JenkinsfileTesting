@@ -32,4 +32,18 @@ def scan(def onFailure) {
   }
 }
 
+def mapSonarFailureToSlackField(def sonarFailures) {
+  return failures.collect {
+    def comparator = it.comparator
+    switch (comparator) {
+        case "GT":
+            comparator = "greater than"
+            break
+        case "LT":
+            comparator = "less than"
+            break
+    }
+    return [title: "Category: ${it.metricKey}", value: "Threshold: Should not be ${comparator} ${it.errorThreshold}\nActual: ${it.actualValue}", short: false]
+  }
+}
 return this
