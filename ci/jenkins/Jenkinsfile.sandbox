@@ -86,7 +86,13 @@ pipeline{
                             "$BUILD_URL",
                             message,
                             failures.collect {
-                                return [title: it.metricKey, value: "Expected: ${it.comparator} ${it.errorThreshold}\nActual: ${it.actualValue}", short: false]
+                                def comparator = it.comparator
+                                switch (comparator) {
+                                    case "GT":
+                                        comparator = "greater than"
+                                        break;
+                                }
+                                return [title: "Category: ${it.metricKey}", value: "Threshold: ${it.comparator} ${it.errorThreshold}\nActual: ${it.actualValue}", short: false]
                             }
                         )
                         error message
