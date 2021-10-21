@@ -15,33 +15,19 @@ slackSend(channel: "#general", attachments: attachments)
 
 def sendFailureMessage(String message) {
   slackSend(color:"danger", message: "<$BUILD_URL|Build> - $message")
+}
 
+def sendDetailedMessage(String color, String title, String titleLink, String message, List fields) {
   def attachments = [
-    [
-      mrkdwn_in: [],
-      color: "danger",
-      //pretext: "Optional pre-text that appears above the attachment block",
-      // author_name: "author_name",
-      title: "$GIT_BRANCH build failed",
-      title_link: "$BUILD_URL",
-      text: "Build failed",
-      fields: [
-        [
-          title: "Step",
-          value: "Sonar Scan",
-          short: false
-        ],
-        [
-          title: "Reason",
-          value: "Scan failed quality",
-          short: false
-        ]
+      [
+        mrkdwn_in: [],
+        color: color,
+        title: title,
+        title_link: titleLink,
+        text: message,
+        fields: fields
       ]
-    ]
-]
-
-slackSend(channel: "#general", attachments: attachments)
-
+  ]
 }
 
 return this

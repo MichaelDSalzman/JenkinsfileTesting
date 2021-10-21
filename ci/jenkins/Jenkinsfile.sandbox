@@ -77,10 +77,18 @@ pipeline{
         }
         stage("SonarQube scan"){
             steps{
-                echo "========executing SonarQube scan======== ${params}"
+                echo "========executing SonarQube scan========"
                 script {
-                    sonarLib.scan({String message -> 
-                        slackLib.sendFailureMessage(message)
+                    sonarLib.scan({String message, List failures ->
+                        slackLib.sendDetailedMessage(
+                            "danger", 
+                            "$GIT_BRANCH build failed",
+                            "$BUILD_URL",
+                            message,
+                            failures.collect {
+                                return [title: it.metricKey, value: "Expected: ${it.comparator} ${errorThreshold}\nActual: ${it.actualValue}", short: false]
+                            }
+                        )
                         error message
                     })
                 }
