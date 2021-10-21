@@ -7,7 +7,7 @@ def scan(def onFailure) {
   withSonarQubeEnv {
     sh 'env'
     script {
-        timeout(time: 1, unit: 'HOURS') {
+        timeout(time: env.sonar_timeoutInMinutes, unit: 'MINUTES') {
         // Just in case something goes wrong, pipeline will be killed after a timeout
         def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
 
