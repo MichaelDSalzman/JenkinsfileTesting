@@ -82,7 +82,7 @@ pipeline{
                     sonarLib.scan({String message, List failures ->
                         slackLib.sendDetailedMessage(
                             "danger", 
-                            "Sandbox $GIT_BRANCH build failed",
+                            "Sandbox build failed on branch $GIT_BRANCH",
                             "$BUILD_URL",
                             message,
                             failures.collect {
@@ -90,6 +90,9 @@ pipeline{
                                 switch (comparator) {
                                     case "GT":
                                         comparator = "greater than"
+                                        break
+                                    case "LT":
+                                        comparator = "less than"
                                         break
                                 }
                                 return [title: "Category: ${it.metricKey}", value: "Threshold: Should not be ${comparator} ${it.errorThreshold}\nActual: ${it.actualValue}", short: false]
