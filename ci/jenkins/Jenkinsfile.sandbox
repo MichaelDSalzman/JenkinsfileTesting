@@ -7,9 +7,6 @@ pipeline{
     stages{
         stage("Init") {
             steps{
-                // buildName "${GIT_BRANCH}"
-                // buildDescription "Executed @ ${NODE_NAME}"
-
                 echo "BRANCH IS ${GIT_BRANCH}"
                 echo "========Running init========"
                 script {
@@ -77,9 +74,9 @@ pipeline{
         }
         failure{
             echo "========pipeline execution failed========"
-            script {
+            //script {
                 //slackLib.sendFailureMessage("It failed")
-            }
+            //}
         }
     }
 }
