@@ -4,8 +4,8 @@ def loadEnvProps(String env) {
   for (key in keys) {
     echo "GOT KEY $key"
     value = props["${key}"]
-    echo "GOT VALUE $value"
-    env["${key}"] = value
+    echo "GOT VALUE $key"
+    env."${key}" = value
   }
 }
 
