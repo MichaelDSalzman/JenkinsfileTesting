@@ -20,7 +20,7 @@ def sendFailureMessage(String message) {
 def sendDetailedMessage(String color, String title, String titleLink, String message, List fields) {
   def attachments = [
       [
-        mrkdwn_in: [],
+        mrkdwn_in: ["text"],
         color: color,
         title: title,
         title_link: titleLink,
