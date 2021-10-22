@@ -21,6 +21,9 @@ def name = "Mike2"
 def name2 = "Tania2"
     def props = readProperties file: "ci/jenkins/sandbox.env"
 
+echo "1"
+echo props
+echo "${props}"
     return props[propName]
 }
 
