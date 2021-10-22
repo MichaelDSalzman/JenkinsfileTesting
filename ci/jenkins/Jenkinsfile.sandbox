@@ -1,6 +1,7 @@
 def slackLib
 def sonarLib
 
+@NonCPS
 void interpolation_test() {
     def a = "${->name} is alive"
     echo a
