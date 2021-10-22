@@ -18,14 +18,22 @@ pipeline{
                     echo env."mike test"
 
                     def envLoader = load "ci/jenkins/envVarLoader.groovy"
-                    envLoader.loadEnvProps("sandbox")
+                    // envLoader.loadEnvProps("sandbox")
 
+                    def props = readProperties file: "ci/jenkins/${env}.env"
+                    keys = props.keySet()
+                    for (key in keys) {
+                        echo "GOT KEY $key"
+                        value = props["${key}"]
+                        echo "GOT VALUE $value"
+                        env."${key}" = "$value"
+                    }
                     // def key = "test"
                     // def value = "FOOBAR"
                     // env."${key}" = "$value"
-                    // echo env."test"
-                    // echo env."test1"
-                    // echo env["test.FOO"]
+                    echo env."test"
+                    echo env."test1"
+                    echo env["test.FOO"]
                 }
             }
         }
