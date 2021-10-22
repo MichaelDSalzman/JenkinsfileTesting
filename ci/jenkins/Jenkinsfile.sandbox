@@ -15,32 +15,39 @@ pipeline{
 
                     // load "ci/jenkins/sandbox.groovy"
 
-def readProperty =  { propName -> 
+                    loader = load "ci/jenkins/envVarLoader.groovy"
+                    loader.loadEnvProps("sandbox")
 
-def name = "Mike2"
-def name2 = "Tania2"
-    def props = readProperties file: "ci/jenkins/sandbox.env", interpolate: true
+                    echo env.message
+                    name = "MIKE"
+                    echo env.message
 
-echo "1"
-echo props[propName]
-echo "${props[propName]}"
-    return props[propName]
-}
+// def readProperty =  { propName -> 
 
-def name = "Mike"
-def name2 = "Tania"
-def prop = readProperty("message")
+// def name = "Mike2"
+// def name2 = "Tania2"
+//     def props = readProperties file: "ci/jenkins/sandbox.env", interpolate: true
 
-echo "HERE WE GO: $prop"
+// echo "1"
+// echo props[propName]
+// echo "${props[propName]}"
+//     return props[propName]
+// }
+
+// def name = "Mike"
+// def name2 = "Tania"
+// def prop = readProperty("message")
+
+// echo "HERE WE GO: $prop"
 
 
-def int1 = 1
-def int2 = 2
-def int3 = 3
-def int4 = 4
-load "ci/jenkins/test_interpolation.groovy"
+// def int1 = 1
+// def int2 = 2
+// def int3 = 3
+// def int4 = 4
+// load "ci/jenkins/test_interpolation.groovy"
 
-echo interpolation_test
+// echo interpolation_test
 
 
 
