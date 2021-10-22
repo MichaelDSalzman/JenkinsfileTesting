@@ -1,6 +1,13 @@
 def slackLib
 def sonarLib
 
+void interpolation_test() {
+    def a = "${->name} is alive"
+    echo a
+    def name = "MIKE"
+    echo a
+}
+
 pipeline{
     agent any //TODO
   
@@ -12,16 +19,7 @@ pipeline{
                 script {
                     slackLib = load "ci/jenkins/slack.groovy"
                     sonarLib = load "ci/jenkins/sonar.groovy"
-
-                    // load "ci/jenkins/sandbox.groovy"
-
-                    def loader = load "ci/jenkins/envVarLoader.groovy"
-                    loader.loadEnvProps("sandbox")
-
-                    echo env.message
-                    name = "MIKE"
-                    echo env.message
-
+interpolation_test()
 // def readProperty =  { propName -> 
 
 // def name = "Mike2"
