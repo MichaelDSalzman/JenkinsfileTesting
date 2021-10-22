@@ -22,7 +22,7 @@ pipeline{
 
                     def a = 'test'
                     env."$a" = "foo"
-                    echo env["test"]
+                    echo env."test"
                     // echo env."test1"
                     // echo env["test.FOO"]
                 }
