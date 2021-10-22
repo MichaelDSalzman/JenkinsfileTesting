@@ -20,7 +20,7 @@ pipeline{
                     def envLoader = load "ci/jenkins/envVarLoader.groovy"
                     // envLoader.loadEnvProps("sandbox")
 
-                    def props = readProperties file: "ci/jenkins/${env}.env"
+                    def props = readProperties file: "ci/jenkins/sandbox.env"
                     keys = props.keySet()
                     for (key in keys) {
                         echo "GOT KEY $key"
@@ -33,7 +33,7 @@ pipeline{
                     // env."${key}" = "$value"
                     echo env."test"
                     echo env."test1"
-                    echo env["test.FOO"]
+                    echo env."test.FOO"
                 }
             }
         }
