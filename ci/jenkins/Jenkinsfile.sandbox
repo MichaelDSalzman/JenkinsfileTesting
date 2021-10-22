@@ -16,6 +16,7 @@ pipeline{
                     load "ci/jenkins/sandbox.groovy"
 
                     echo env."mike test"
+                    echo env.sonar.failure.slack.color
 
                     def envLoader = load "ci/jenkins/envVarLoader.groovy"
                     // envLoader.loadEnvProps("sandbox")
@@ -23,14 +24,10 @@ pipeline{
                     def props = readProperties file: "ci/jenkins/sandbox.env"
                     keys = props.keySet()
                     for (key in keys) {
-                        echo "GOT KEY $key"
                         value = props["${key}"]
-                        echo "GOT VALUE $value"
                         env."${key}" = "$value"
                     }
-                    // def key = "test"
-                    // def value = "FOOBAR"
-                    // env."${key}" = "$value"
+
                     echo env."test"
                     echo env."test1"
                     echo env."test.FOO"
