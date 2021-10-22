@@ -20,7 +20,7 @@ pipeline{
                     def envLoader = load "ci/jenkins/envVarLoader.groovy"
                     // envLoader.loadEnvProps("sandbox")
 
-                    def a = test
+                    def a = 'test'
                     env."$a" = "foo"
                     echo env["test"]
                     // echo env."test1"
