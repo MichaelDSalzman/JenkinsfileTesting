@@ -16,7 +16,7 @@ pipeline{
                     load "ci/jenkins/sandbox.groovy"
 
                     echo env."mike test"
-                    echo env.sonar.failure.slack.color
+                    echo env.sonar
 
                     def envLoader = load "ci/jenkins/envVarLoader.groovy"
                     // envLoader.loadEnvProps("sandbox")
