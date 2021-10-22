@@ -1,4 +1,5 @@
 def scan(def onFailure) {
+  echo mikeTest
   withSonarQubeEnv {
       sh 'env'
     sh(script: 'npm run sonar' )
