@@ -36,7 +36,11 @@ echo "HERE WE GO: $prop"
 
 load "ci/jenkins/test_interpolation.groovy"
 
-//echo interpolation_test
+def int1 = 1
+def int2 = 2
+def int3 = 3
+def int4 = 4
+echo interpolation_test
 
 
                     // def envLoader = load "ci/jenkins/envVarLoader.groovy"
