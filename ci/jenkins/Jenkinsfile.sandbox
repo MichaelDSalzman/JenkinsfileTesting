@@ -18,7 +18,7 @@ pipeline{
 def readProperty =  { propName -> 
     def props = readProperties file: "ci/jenkins/sandbox.env"
 
-    return props["propName"]
+    return props[propName]
 }
 
 def name = "Mike"
