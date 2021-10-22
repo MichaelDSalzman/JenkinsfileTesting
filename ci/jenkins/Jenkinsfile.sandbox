@@ -34,12 +34,12 @@ def prop = readProperty("message")
 echo "HERE WE GO: $prop"
 
 
-load "ci/jenkins/test_interpolation.groovy"
-
 def int1 = 1
 def int2 = 2
 def int3 = 3
 def int4 = 4
+load "ci/jenkins/test_interpolation.groovy"
+
 echo interpolation_test
 echo interpolation_test2
 
