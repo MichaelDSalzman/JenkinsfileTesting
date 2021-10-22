@@ -19,7 +19,7 @@ def readProperty =  { propName ->
 
 def name = "Mike2"
 def name2 = "Tania2"
-    def props = readProperties file: "ci/jenkins/sandbox.env" interpolate: true
+    def props = readProperties file: "ci/jenkins/sandbox.env", interpolate: true
 
 echo "1"
 echo props[propName]
