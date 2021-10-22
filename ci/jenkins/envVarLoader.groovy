@@ -4,7 +4,10 @@ def loadEnvProps(String env) {
   keys = props.keySet()
   for (key in keys) {
     value = props["${key}"]
+    echo key
+    echo value
     env."${key}" = "${->value}"
+    echo env.key
   }
 }
 
