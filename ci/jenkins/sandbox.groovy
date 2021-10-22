@@ -3,6 +3,8 @@ env.sonar_failure_slack_title="Sandbox build failed on branch $GIT_BRANCH"
 env.sonar_failure_slack_title_link="$BUILD_URL"
 env.sonar_timeoutInMinutes=10
 
+env."mike" = "HELLO WORLD"
+
 env.sonar = [
     timeoutInMinutes: 60,
     failure: [

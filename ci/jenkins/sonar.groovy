@@ -1,7 +1,5 @@
 def scan(def onFailure) {
-  echo mikeTest
   withSonarQubeEnv {
-      sh 'env'
     sh(script: 'npm run sonar' )
   }
 
@@ -44,7 +42,11 @@ def mapSonarFailuresToSlackFields(def failures) {
             comparator = "less than"
             break
     }
-    return [title: "Category: ${it.metricKey.replaceAll('_', ' ')}", value: "Threshold: Should not be ${comparator} ${it.errorThreshold}\nActual: ${it.actualValue}", short: false]
+    return [
+      title: "Category: ${it.metricKey.replaceAll('_', ' ')}", 
+      value: "Threshold: Should not be ${comparator} ${it.errorThreshold}\nActual: ${it.actualValue}", 
+      short: false
+    ]
   }
 }
 return this

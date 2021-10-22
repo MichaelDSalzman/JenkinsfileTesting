@@ -1,8 +1,6 @@
 def slackLib
 def sonarLib
 
-def mikeTest = "HELLO WORLD"
-
 pipeline{
     agent any //TODO
   
@@ -17,7 +15,7 @@ pipeline{
 
                     load "ci/jenkins/sandbox.groovy"
 
-                    echo mikeTest
+                    echo env."mike"
                 }
             }
         }
