@@ -4,7 +4,7 @@ def sonarLib
 @NonCPS
 void interpolation_test() {
     def name = "old"
-    def a = '${->name} is alive"
+    def a = "${->name} is alive"
     echo a
     name = "MIKE"
     echo a
