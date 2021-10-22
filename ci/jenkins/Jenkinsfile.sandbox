@@ -41,7 +41,7 @@ def int4 = 4
 load "ci/jenkins/test_interpolation.groovy"
 
 echo interpolation_test
-echo interpolation_test2
+
 
 
                     // def envLoader = load "ci/jenkins/envVarLoader.groovy"
