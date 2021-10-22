@@ -1,1 +1,1 @@
-interpolation_test="This is a test $name ${->name}"
+interpolation_test="This is a test ${->name} ${->name2}"
