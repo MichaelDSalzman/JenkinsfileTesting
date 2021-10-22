@@ -13,26 +13,31 @@ pipeline{
                     slackLib = load "ci/jenkins/slack.groovy"
                     sonarLib = load "ci/jenkins/sonar.groovy"
 
-                    load "ci/jenkins/sandbox.groovy"
+                    // load "ci/jenkins/sandbox.groovy"
 
-                    echo env."mike test"
-                    echo env.sonar
+def readProperty(String propName) {
+    def props = readProperties file: "ci/jenkins/sandbox.env"
 
-                    def envLoader = load "ci/jenkins/envVarLoader.groovy"
+    return props["propName"]
+}
+
+def name = "Mike"
+def name2 = "Tania"
+
+echo readProperty("message")
+
+
+                    // def envLoader = load "ci/jenkins/envVarLoader.groovy"
                     // envLoader.loadEnvProps("sandbox")
 
-                    def props = readProperties file: "ci/jenkins/sandbox.env"
-                    keys = props.keySet()
-                    for (key in keys) {
-                        value = props["${key}"]
-                        env."${key}" = "$value"
-                    }
-                    def name = "MIKE"
-                    def name2 = "TANIA"
-                    
-                    def msg =  env."message"
+                    // def props = readProperties file: "ci/jenkins/sandbox.env"
+                    // keys = props.keySet()
+                    // for (key in keys) {
+                    //     value = props["${key}"]
+                    //     env."${key}" = "$value"
+                    // }
 
-                    echo msg
+
                 }
             }
         }
