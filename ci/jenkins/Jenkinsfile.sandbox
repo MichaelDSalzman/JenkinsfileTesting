@@ -27,10 +27,12 @@ pipeline{
                         value = props["${key}"]
                         env."${key}" = "$value"
                     }
+                    def name = "MIKE"
+                    def name2 = "TANIA"
+                    
+                    def msg =  env."message"
 
-                    echo env."test"
-                    echo env."test1"
-                    echo env."test.FOO"
+                    echo msg
                 }
             }
         }
