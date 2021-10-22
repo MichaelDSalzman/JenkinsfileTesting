@@ -23,8 +23,9 @@ def readProperty =  { propName ->
 
 def name = "Mike"
 def name2 = "Tania"
+def prop = readProperty("message")
 
-echo readProperty("message")
+echo "HERE WE GO: $prop"
 
 
                     // def envLoader = load "ci/jenkins/envVarLoader.groovy"
