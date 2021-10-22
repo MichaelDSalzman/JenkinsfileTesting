@@ -15,7 +15,7 @@ pipeline{
 
                     // load "ci/jenkins/sandbox.groovy"
 
-def readProperty(String propName) {
+def readProperty =  { propName -> 
     def props = readProperties file: "ci/jenkins/sandbox.env"
 
     return props["propName"]
