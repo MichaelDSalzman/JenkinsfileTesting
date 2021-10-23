@@ -31,3 +31,5 @@ def scan(def onFailure) {
 
   onFailure([failedConditions: [[metricKey: "fake_key", comparator: "LT", errorThreshold: 5, actualValue: 6]], dashboardUrl: "http://google.com"])
 }
+
+return this

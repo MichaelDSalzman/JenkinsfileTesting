@@ -23,4 +23,5 @@ def generateSonarFailureDetailedSlackMessage(List failedConditions, String sonar
       fields: [[title: env."sonar_failure_slack_report_url_header", value: sonarDashboardUrl]] + failures
   ]
 }
+
 return this
