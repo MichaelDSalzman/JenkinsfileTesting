@@ -4,9 +4,8 @@ def scan(def onFailure) {
   }
 
   withSonarQubeEnv {
-    sh 'env'
     script {
-        timeout(time: env.sonar_timeoutInMinutes, unit: 'MINUTES') {
+      timeout(time: env."sonar_timeoutInMinutes", unit: 'MINUTES') {
         // Just in case something goes wrong, pipeline will be killed after a timeout
         def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
 
@@ -22,31 +21,11 @@ def scan(def onFailure) {
           def QUALITY_MAP = readJSON file: '.scannerwork/sonar-quality.json'
 
           // Filter out conditions that failed
-          List failures = QUALITY_MAP['projectStatus']['conditions'].findAll { it['status'] == 'ERROR' }
+          List failedConditions = QUALITY_MAP['projectStatus']['conditions'].findAll { it['status'] == 'ERROR' }
 
-          onFailure("Sonar quality failures:", failures, SONAR_TASK_PROPERTIES.dashboardUrl)
+          onFailure([failedConditions: failedConditions, dashboardUrl: SONAR_TASK_PROPERTIES.dashboardUrl])
         }
       }
     }
   }
 }
-
-def mapSonarFailuresToSlackFields(def failures) {
-  return failures.collect {
-    def comparator = it.comparator
-    switch (comparator) {
-        case "GT":
-            comparator = "greater than"
-            break
-        case "LT":
-            comparator = "less than"
-            break
-    }
-    return [
-      title: "Category: ${it.metricKey.replaceAll('_', ' ')}", 
-      value: "Threshold: Should not be ${comparator} ${it.errorThreshold}\nActual: ${it.actualValue}", 
-      short: false
-    ]
-  }
-}
-return this

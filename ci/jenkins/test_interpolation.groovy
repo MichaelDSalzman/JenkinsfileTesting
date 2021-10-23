@@ -1,1 +1,0 @@
-interpolation_test="THIS IS A TEST $GIT_BRANCH"
