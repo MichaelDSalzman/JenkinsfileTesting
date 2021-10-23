@@ -17,7 +17,7 @@ pipeline{
                 echo "========Running init========"
                 script {
 
-                    p = readProperties file: 'ci/env/props.env'
+                    p = readProperties file: 'ci/env/props.env', interpolate: true
                     echo p.foobar
 
 
