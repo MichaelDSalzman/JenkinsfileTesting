@@ -17,6 +17,8 @@ pipeline{
                 echo "========Running init========"
                 script {
 
+                    defaultProps = new Properties()
+                    defaultProps['fromDefault'] = "MIKE"
                     p = readProperties file: 'ci/env/props.env', interpolate: true
                     echo p.foobar
 
