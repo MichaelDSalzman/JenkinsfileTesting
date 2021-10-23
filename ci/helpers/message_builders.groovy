@@ -3,15 +3,15 @@ def generateSonarFailureDetailedSlackMessage(List failedConditions, String sonar
     def comparator = it.comparator
     switch (comparator) {
         case "GT":
-            comparator = env."sonar_failure_slack_comparator_gt"
+            comparator = env.sonar_failure_slack_comparator_gt
             break
         case "LT":
-            comparator = env."sonar_failure_slack_comparator_lt"
+            comparator = env.sonar_failure_slack_comparator_lt
             break
     }
     return [
-      title: "${env."sonar_failure_slack_failure_type_header"}: ${it.metricKey.replaceAll('_', ' ')}", 
-      value: "${env."sonar_failure_slack_failure_type_body_threshold"} ${comparator} ${it.errorThreshold}\n${env."sonar_failure_slack_failure_type_body_actual"}: ${it.actualValue}", 
+      title: "${env.sonar_failure_slack_failure_type_header}: ${it.metricKey.replaceAll('_', ' ')}", 
+      value: "${env.sonar_failure_slack_failure_type_body_threshold} ${comparator} ${it.errorThreshold}\n${env.sonar_failure_slack_failure_type_body_actual}: ${it.actualValue}", 
       short: false
     ]
   }
@@ -19,8 +19,8 @@ def generateSonarFailureDetailedSlackMessage(List failedConditions, String sonar
       color: "danger",
       title: "${env.sonar_failure_slack_title} $GIT_BRANCH",
       titleLink: "$BUILD_URL",
-      text: env."sonar_failure_slack_subtitle",
-      fields: [[title: env."sonar_failure_slack_report_url_header", value: sonarDashboardUrl]] + fields
+      text: env.sonar_failure_slack_subtitle,
+      fields: [[title: env.sonar_failure_slack_report_url_header, value: sonarDashboardUrl]] + fields
   ]
 }
 

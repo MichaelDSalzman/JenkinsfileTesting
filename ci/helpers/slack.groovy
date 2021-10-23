@@ -12,7 +12,7 @@ def warning(String message) {
 
 def sendMessage(String color, String message) {
     sh "env"
-    slackSend(channel: env."slack_default_channel", color:"${color}", message: "<$BUILD_URL|${env."slack_message_build_link_text"}> - $GIT_BRANCH - $message")
+    slackSend(channel: env.slack_default_channel, color:"${color}", message: "<$BUILD_URL|${env.slack_message_build_link_text}> - $GIT_BRANCH - $message")
 }
 
 // Send a more detailed message. Color is either a hex code or one of "good", "danger", "warning".
@@ -29,7 +29,7 @@ def sendDetailedMessage(Map params) {
       ]
   ]
 
-  slackSend(channel: env."slack_default_channel", attachments: attachments)
+  slackSend(channel: env.slack_default_channel, attachments: attachments)
 }
 
 return this
