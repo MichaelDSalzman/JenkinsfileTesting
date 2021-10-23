@@ -19,7 +19,7 @@ pipeline{
 
                     defaultProps = new Properties()
                     defaultProps['fromDefault'] = "MIKE"
-                    p = readProperties file: 'ci/env/props.env', interpolate: true
+                    p = readProperties file: 'ci/env/props.env', interpolate: true, defaults: defaultProps
                     echo p.foobar
 
 
