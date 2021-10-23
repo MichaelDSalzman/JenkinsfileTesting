@@ -18,7 +18,7 @@ def generateSonarFailureDetailedSlackMessage(List failedConditions, String sonar
   }
   return [
       color: "danger",
-      title: "${env.sonar_failure_slack_title}",
+      title: "${env.sonar_failure_slack_title} $GIT_BRANCH",
       titleLink: "$BUILD_URL",
       text: env.sonar_failure_slack_subtitle,
       fields: [[title: env.sonar_failure_slack_report_url_header, value: sonarDashboardUrl]] + fields
