@@ -19,6 +19,9 @@ pipeline{
 
                     defaultProps = new Properties()
                     defaultProps['fromDefault'] = "MIKE"
+                    envProps = properties.putAll(env.getEnvironment())
+                    echo envProps
+                    defaultProps.putAll(envProps)
                     p = readProperties file: 'ci/env/props.env', interpolate: true, defaults: defaultProps
                     echo p.foobar
 
