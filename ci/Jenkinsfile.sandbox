@@ -1,8 +1,6 @@
 env.envName = "sandbox"
 env.envLanguage = "en"
 
-
-
 def slackLib
 def sonarLib 
 def messageBuilderLib
