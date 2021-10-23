@@ -1,13 +1,7 @@
 env.envName = "sandbox"
 env.envLanguage = "en"
 
-def globalProps = readProperties file: "ci/env/global-${env.envLanguage}.env", interpolate: true
-def props = readProperties file: "ci/env/${env.envName}.env", interpolate: true, defaults: globalProps
-keys = props.keySet()
-for (key in keys) {
-    value = props["${key}"]
-    env."${key}" = "$value"
-}
+
 
 def slackLib
 def sonarLib 
@@ -24,6 +18,14 @@ pipeline{
             steps{
                 echo "========Running init========"
                 script {
+                    def globalProps = readProperties file: "ci/env/global-${env.envLanguage}.env", interpolate: true
+def props = readProperties file: "ci/env/${env.envName}.env", interpolate: true, defaults: globalProps
+keys = props.keySet()
+for (key in keys) {
+    value = props["${key}"]
+    env."${key}" = "$value"
+}
+
                     slackLib = load "ci/helpers/slack.groovy"
                     sonarLib = load "ci/helpers/sonar.groovy"
                     messageBuilderLib = load "ci/helpers/message_builders.groovy"
