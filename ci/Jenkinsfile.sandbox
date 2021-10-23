@@ -63,7 +63,7 @@ pipeline{
         stage("Unit && e2e Tests w/o coverage"){
             steps{
                 echo "========executing unit && e2e tests w/o coverage========"
-                sh 'yarn test:unit'     
+                // sh 'yarn test:unit'     
             }
             post{
                 failure{
@@ -76,13 +76,13 @@ pipeline{
         stage("Unit && e2e Tests w/coverage"){
             steps{
                 echo "========executing unit && e2e tests w/coverage========"
-                script {
-                    def testResult = sh(script: "yarn test:unit", returnStatus: true)
-                    if (testResult != 0) {
-                        currentBuild.result = 'UNSTABLE'
-                        slackMessage = env."slack_message_test_coverage_failure"
-                    }
-                }             
+                // script {
+                //     def testResult = sh(script: "yarn test:unit", returnStatus: true)
+                //     if (testResult != 0) {
+                //         currentBuild.result = 'UNSTABLE'
+                //         slackMessage = env."slack_message_test_coverage_failure"
+                //     }
+                // }             
             }
         }
         stage("SonarQube scan"){
