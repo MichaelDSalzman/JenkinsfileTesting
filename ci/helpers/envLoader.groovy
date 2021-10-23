@@ -1,6 +1,8 @@
 // TODO BETTER DOCS
 def load() {
   def envProps = new Properties()
+  envProps.put("GIT_BRANCH", GIT_BRANCH)
+  
   echo envProps.toString()
   env.getEnvironment().each {
     envProps.put(it.key, it.value)
