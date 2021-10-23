@@ -18,13 +18,15 @@ pipeline{
             steps{
                 echo "========Running init========"
                 script {
-                    def globalProps = readProperties file: "ci/env/global-${env.envLanguage}.env", interpolate: true
-def props = readProperties file: "ci/env/${env.envName}-${env.envLanguage}.env", interpolate: true, defaults: globalProps
-keys = props.keySet()
-for (key in keys) {
-    value = props["${key}"]
-    env."${key}" = "$value"
-}
+                    // def globalProps = readProperties file: "ci/env/global-${env.envLanguage}.env", interpolate: true
+                    // def props = readProperties file: "ci/env/${env.envName}-${env.envLanguage}.env", interpolate: true, defaults: globalProps
+                    // keys = props.keySet()
+                    // for (key in keys) {
+                    //     value = props["${key}"]
+                    //     env."${key}" = "$value"
+                    // }
+
+                    load("ci/helpers/envLoader.groovy").load()
 
                     slackLib = load "ci/helpers/slack.groovy"
                     sonarLib = load "ci/helpers/sonar.groovy"
