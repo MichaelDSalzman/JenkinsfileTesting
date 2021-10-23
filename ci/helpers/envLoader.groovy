@@ -1,7 +1,7 @@
 // TODO BETTER DOCS
 def load() {
-  def envProps = new Properties().putAll(env.getEnvironment())
-  echo env.getEnvironment().toString()
+  def envProps = new Properties()
+  echo envProps.toString()
   env.getEnvironment().each {
     envProps.put(it.key, it.value)
   }
