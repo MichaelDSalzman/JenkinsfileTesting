@@ -1,3 +1,4 @@
+// TODO BETTER DOCS
 def generateSonarFailureDetailedSlackMessage(List failedConditions, String sonarDashboardUrl) {
   def fields = failedConditions.collect {
     def comparator = it.comparator

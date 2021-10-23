@@ -1,3 +1,4 @@
+// TODO BETTER DOCS
 def scan(def onFailure) {
   // withSonarQubeEnv {
   //   sh(script: 'npm run sonar' )
