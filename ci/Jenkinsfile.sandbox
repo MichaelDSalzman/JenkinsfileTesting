@@ -16,7 +16,14 @@ pipeline{
             steps{
                 echo "========Running init========"
                 script {
-                    echo "MIKE ${env.getClass()}"
+
+                    p = readProperties file: 'ci/env/props.env'
+                    echo p.foobar
+
+
+
+
+
                     load("ci/helpers/envLoader.groovy").load()
 
                     slackLib = load "ci/helpers/slack.groovy"
