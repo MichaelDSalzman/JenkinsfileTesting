@@ -1,5 +1,5 @@
-env.envName = "sandbox"
-env.envLanguage = "en"
+env.ENV_NAME = "Sandbox"
+env.ENV_LANGUAGE = "en"
 
 def slackLib
 def sonarLib 
