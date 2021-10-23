@@ -1,5 +1,3 @@
-def slackChannel = '#general'
-
 def success(String message) {
     sendMessage("good", message)
 }
@@ -13,7 +11,7 @@ def warning(String message) {
 }
 
 def sendMessage(String color, String message) {
-    slackSend(channel: slackChannel, color:"${color}", message: "<$BUILD_URL|${env."slack_message_build_link_text"}> - $BRANCH_NAME - $message")
+    slackSend(channel: env."slack_default_channel", color:"${color}", message: "<$BUILD_URL|${env."slack_message_build_link_text"}> - $BRANCH_NAME - $message")
 }
 
 // Send a more detailed message. Color is either a hex code or one of "good", "danger", "warning".
@@ -30,7 +28,7 @@ def sendDetailedMessage(Map params) {
       ]
   ]
 
-  slackSend(channel: slackChannel, attachments: attachments)
+  slackSend(channel: env."slack_default_channel", attachments: attachments)
 }
 
 return this
