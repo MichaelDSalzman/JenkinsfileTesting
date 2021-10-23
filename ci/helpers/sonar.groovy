@@ -29,7 +29,11 @@ def scan(def onFailure) {
   //   }
   // }
 
-  onFailure([failedConditions: [[metricKey: "fake_key", comparator: "LT", errorThreshold: 5, actualValue: 6]], dashboardUrl: "http://google.com"])
+  onFailure([failedConditions: [
+    [metricKey: "code_coverage", comparator: "LT", errorThreshold: 80, actualValue: 1],
+    [metricKey: "code_smells", comparator: "GT", errorThreshold: 5, actualValue: 60],
+    ], 
+    dashboardUrl: "http://google.com"])
 }
 
 return this
