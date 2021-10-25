@@ -1,5 +1,5 @@
-env.ENV_NAME = "Sandbox"
-env.ENV_LANGUAGE = "en"
+def envName = "Sandbox"
+def envLanguage = "en"
 
 def slackLib
 def sonarLib 
@@ -16,7 +16,7 @@ pipeline{
             steps{
                 echo "========Running init========"
                 script {
-                    load("ci/helpers/envLoader.groovy").load()
+                    load("ci/helpers/envLoader.groovy").load(envName, envLanguage)
 
                     slackLib = load "ci/helpers/slack.groovy"
                     sonarLib = load "ci/helpers/sonar.groovy"
