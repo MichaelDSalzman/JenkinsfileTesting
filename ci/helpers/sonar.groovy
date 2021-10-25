@@ -1,7 +1,7 @@
 // TODO BETTER DOCS
 def scan(def onFailure) {
   withSonarQubeEnv {
-    sh(script: "SONARQUBE_SCANNER_PARAMS='{\"sonar.projectKey\": \"${env.sonar_project_key}\", \"sonar.password\": \"${env.SONAR_AUTH_TOKEN}\"}' npm run sonar" )
+    sh(script: "SONARQUBE_SCANNER_PARAMS='{\"sonar.projectKey\": \"${env.sonar_project_key}\", \"sonar.login\": \"${env.SONAR_AUTH_TOKEN}\"}' npm run sonar" )
   }
 
   withSonarQubeEnv {
