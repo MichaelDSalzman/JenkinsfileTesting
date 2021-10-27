@@ -35,7 +35,9 @@ pipeline{
         }
         stage("testing jira comment") {
             steps{
-                jiraLib.addComment(jiraIssueId, "My comment for this ticket - ${new Date()}")
+                script {
+                    jiraLib.addComment(jiraIssueId, "My comment for this ticket - ${new Date()}")
+                }
             }
         }
         stage("Install dependencies"){
