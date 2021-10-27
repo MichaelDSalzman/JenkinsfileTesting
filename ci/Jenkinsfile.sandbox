@@ -24,7 +24,8 @@ pipeline{
                     sonarLib = load "ci/helpers/sonar.groovy"
                     messageBuilderLib = load "ci/helpers/message_builders.groovy"
 
-                    def jiraIssueIdMatcher = (env.GIT_BRANCH =~ /^(AF-\d+)-.*$/)​​
+                    def jiraIssueIdMatcher = (env.GIT_BRANCH =~ /^.*?(AF-\d+)-.*$/)
+
                     if (jiraIssueIdMatcher.matches()) {
                         jiraIssueId = jiraIssueIdMatcher[0]​[1]
                     } else {
