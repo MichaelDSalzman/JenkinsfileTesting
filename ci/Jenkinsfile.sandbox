@@ -28,7 +28,10 @@ pipeline{
                     echo "HERE?"
                     if (jiraIssueIdMatcher.matches()) {
                         echo "IN HERE"
+                        echo jiraIssueIdMatcher[0]​[1]
+                        echo jiraIssueId
                         jiraIssueId = jiraIssueIdMatcher[0]​[1]
+                        echo jiraIssueId
                     } else {
                         error "NO JIRA ISSUE ID COULD BE FOUND IN THE BRANCH NAME"
                     }
