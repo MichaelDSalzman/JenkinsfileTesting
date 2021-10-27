@@ -5,10 +5,11 @@ def jiraIssueId
 
 def slackLib
 def sonarLib 
+def jiraLib
 def messageBuilderLib
 
 boolean sendGenericFailureMsg = true
-String slackMessage = env.slack_message_unexpected_failure
+String slackMessage
 
 pipeline{
     agent any //TODO Waiting on Ops to create an appropriate worker.
@@ -22,12 +23,11 @@ pipeline{
 
                     slackLib = load "ci/helpers/slack.groovy"
                     sonarLib = load "ci/helpers/sonar.groovy"
+                    jiraLib = load "ci/helpers/jira.groovy"
                     messageBuilderLib = load "ci/helpers/message_builders.groovy"
 
-                    def jiraIssueIdMatcher = env.GIT_BRANCH =~ /^.*?(AF-\d+)-.*$/
-                    if (jiraIssueIdMatcher.matches()) {
-                        jiraIssueId = jiraIssueIdMatcher[0][1]
-                    } else {
+                    jiraIssueId = jiraLib.findJiraIssueIdFromBranch
+                    if(null == jiraIssueId) {
                         error "NO JIRA ISSUE ID COULD BE FOUND IN THE BRANCH NAME"
                     }
                 }
@@ -138,14 +138,14 @@ pipeline{
             script {
                 currentBuild.result != 'UNSTABLE'
                     ? slackLib.success(env.slack_message_generic_success)
-                    : slackLib.warning(slackMessage)
+                    : slackLib.warning(slackMessage ? slackMessage : env.slack_message_unexpected_failure)
             }
         }
         failure{
             echo "========pipeline execution failed========"
             script {
                 if(sendGenericFailureMsg) {
-                    slackLib.failure(slackMessage)
+                    slackLib.failure(slackMessage ? slackMessage : env.slack_message_unexpected_failure)
                 }
             }            
         }
