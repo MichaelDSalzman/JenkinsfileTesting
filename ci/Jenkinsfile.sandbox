@@ -26,7 +26,7 @@ pipeline{
                     jiraLib = load "ci/helpers/jira.groovy"
                     messageBuilderLib = load "ci/helpers/message_builders.groovy"
 
-                    jiraIssueId = jiraLib.findJiraIssueIdFromBranch
+                    jiraIssueId = jiraLib.findJiraIssueIdFromBranch()
                     if(null == jiraIssueId) {
                         error "NO JIRA ISSUE ID COULD BE FOUND IN THE BRANCH NAME"
                     }
