@@ -37,7 +37,7 @@ pipeline{
             steps{
                 script {
                     withEnv(['JIRA_SITE=EC2']) {
-                        def comment = [body: 'My comment for this ticket']
+                        def comment = [body: "My comment for this ticket - ${new Date()}"]
                         jiraAddComment idOrKey: jiraIssueId, input: comment
                     }
                 }
