@@ -1,6 +1,8 @@
 def envName = "Sandbox"
 def envLanguage = "en"
 
+def jiraIssueId
+
 def slackLib
 def sonarLib 
 def messageBuilderLib
@@ -21,6 +23,13 @@ pipeline{
                     slackLib = load "ci/helpers/slack.groovy"
                     sonarLib = load "ci/helpers/sonar.groovy"
                     messageBuilderLib = load "ci/helpers/message_builders.groovy"
+
+                    def jiraIssueIdMatcher = (env.GIT_BRANCH =~ /^(AF-\d+)-.*$/)​​
+                    if (jiraIssueIdMatcher.matches()) {
+                        jiraIssueId = jiraIssueIdMatcher[0]​[1]
+                    } else {
+                        error "NO JIRA ISSUE ID COULD BE FOUND IN THE BRANCH NAME"
+                    }
                 }
             }
         }
@@ -29,7 +38,7 @@ pipeline{
                 script {
                     withEnv(['JIRA_SITE=EC2']) {
                         def comment = [body: 'My comment for this ticket']
-                        jiraAddComment idOrKey: 'AF-1', input: comment
+                        jiraAddComment idOrKey: jiraIssueId, input: comment
                     }
                 }
             }
