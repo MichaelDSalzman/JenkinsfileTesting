@@ -24,6 +24,16 @@ pipeline{
                 }
             }
         }
+        stage("testing jira comment") {
+            steps{
+                script {
+                    withEnv(['JIRA_SITE=EC2']) {
+                        def comment = [body: 'My comment for this ticket']
+                        jiraAddComment idOrKey: 'AF-1', input: comment
+                    }
+                }
+            }
+        }
         stage("Install dependencies"){
             steps{
                 echo "========Installing dependencies========"
