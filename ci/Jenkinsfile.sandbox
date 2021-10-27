@@ -24,9 +24,10 @@ pipeline{
                     sonarLib = load "ci/helpers/sonar.groovy"
                     messageBuilderLib = load "ci/helpers/message_builders.groovy"
 
-                    def jiraIssueIdMatcher = (env.GIT_BRANCH =~ /^.*?(AF-\d+)-.*$/)
-
+                    def jiraIssueIdMatcher = env.GIT_BRANCH =~ /^.*?(AF-\d+)-.*$/
+                    echo "HERE?"
                     if (jiraIssueIdMatcher.matches()) {
+                        echo "IN HERE"
                         jiraIssueId = jiraIssueIdMatcher[0]​[1]
                     } else {
                         error "NO JIRA ISSUE ID COULD BE FOUND IN THE BRANCH NAME"
