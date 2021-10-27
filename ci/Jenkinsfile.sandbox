@@ -28,10 +28,6 @@ pipeline{
                     echo "HERE?"
                     if (jiraIssueIdMatcher.matches()) {
                         echo "IN HERE"
-                        echo jiraIssueIdMatcher.toString()
-                        echo jiraIssueIdMatcher[0].toString()
-                        echo jiraIssueIdMatcher[0]​[1].toString()
-                        echo jiraIssueId
                         jiraIssueId = jiraIssueIdMatcher[0]​[1].toString()
                         echo jiraIssueId
                     } else {
