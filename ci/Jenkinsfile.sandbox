@@ -35,12 +35,7 @@ pipeline{
         }
         stage("testing jira comment") {
             steps{
-                script {
-                    withEnv(['JIRA_SITE=EC2']) {
-                        def comment = [body: "My comment for this ticket - ${new Date()}"]
-                        jiraAddComment idOrKey: jiraIssueId, input: comment
-                    }
-                }
+                jiraLib.addComment(jiraIssueId, "My comment for this ticket - ${new Date()}")
             }
         }
         stage("Install dependencies"){
