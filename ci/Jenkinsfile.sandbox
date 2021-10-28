@@ -99,6 +99,8 @@ pipeline{
                         slackLib.sendDetailedMessage(
                             messageBuilderLib.generateSonarFailureDetailedSlackMessage(sonarResult.failedConditions, sonarResult.dashboardUrl)
                         )
+
+                        jiraLib.addComment(jiraIssueId, messageBuilderLib.buildDetailedFailureSonarJiraMessage(sonarResult.failedConditions, sonarResult.dashboardUrl))
                             
                         sendGenericFailureMsg = false
                         error "Sonar Quality scan failed"
@@ -145,9 +147,8 @@ pipeline{
             script {
                 if(sendGenericFailureMsg) {
                     slackLib.failure(slackMessage ? slackMessage : env.slack_message_unexpected_failure)
-                }
-
-                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraFailureComment(slackMessage ? slackMessage : env.slack_message_unexpected_failure))
+                    jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraFailureComment(slackMessage ? slackMessage : env.slack_message_unexpected_failure))
+                }                
             }            
         }
     }
