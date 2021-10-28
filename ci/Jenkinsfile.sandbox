@@ -137,7 +137,7 @@ pipeline{
                     ? slackLib.success(env.slack_message_generic_success)
                     : slackLib.warning(slackMessage ? slackMessage : env.slack_message_unexpected_failure)
 
-                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraComment("green"))
+                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraSuccessComment())
             }
         }
         failure{
@@ -147,7 +147,7 @@ pipeline{
                     slackLib.failure(slackMessage ? slackMessage : env.slack_message_unexpected_failure)
                 }
 
-                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraComment("red", slackMessage ? slackMessage : env.slack_message_unexpected_failure))
+                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraFailureComment(slackMessage ? slackMessage : env.slack_message_unexpected_failure))
             }            
         }
     }

@@ -25,8 +25,16 @@ def generateSonarFailureDetailedSlackMessage(List failedConditions, String sonar
   ]
 }
 
-def buildJiraComment(String color, String message = null) {
-  return "Build {color:${color}}*completed*{color} ${message} {quote}*Branch*: ${GIT_BRANCH} \n\n *Changeset:* ${GIT_COMMIT} \n\n*Environment:* ${env.ENV_NAME}{quote}"
+def buildJiraSuccessComment(String message = null) {
+  return "Build {color:green}*completed*{color}\n\n" + buildJiraComment(message)
+}
+
+def buildJiraFailureComment(String message = null) {
+  return "Build {color:red}*failed*{color}\n\n" + buildJiraComment(message)
+}
+
+def buildJiraComment(String message = null) {
+  return "${message} {quote}*Branch*: ${GIT_BRANCH} \n\n *Changeset:* ${GIT_COMMIT} \n\n*Environment:* ${env.ENV_NAME}{quote}"
 }
 
 return this
