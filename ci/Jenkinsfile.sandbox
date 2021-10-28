@@ -36,7 +36,7 @@ pipeline{
         stage("testing jira comment") {
             steps{
                 script {
-                    jiraLib.addComment(jiraIssueId, "Build {color:green}completed{color} {quote} *Date:* ${new Date()} \n\n *Environment:* ${envName} {quote}")
+                    jiraLib.addComment(jiraIssueId, "Build {color:green}*completed*{color} {quote}*Branch*: ${GIT_BRANCH} \n\n *Changeset:* ${GIT_COMMIT} \n\n*Environment:* ${envName}{quote}")
                 }
             }
         }
