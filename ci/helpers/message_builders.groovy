@@ -42,15 +42,15 @@ def buildDetailedFailureSonarJiraMessage(List failedConditions, String sonarDash
     def comparator = it.comparator
     switch (comparator) {
         case "GT":
-            comparator = env.sonar_failure_slack_comparator_gt
+            comparator = env.sonar_failure_jira_comparator_gt
             break
         case "LT":
-            comparator = env.sonar_failure_slack_comparator_lt
+            comparator = env.sonar_failure_jira_comparator_lt
             break
     }
-    return "*${it.metricKey.replaceAll('_', ' ').capitalize()}* ${env.sonar_failure_slack_failure_type_body_threshold} ${comparator} *${it.errorThreshold}*. ${env.sonar_failure_slack_failure_type_body_actual}: *${it.actualValue}*"
+    return "*${it.metricKey.replaceAll('_', ' ').capitalize()}*: ${env.sonar_failure_jira_failure_threshold} ${comparator} *${it.errorThreshold}*. ${env.sonar_failure_jira_failure_type_body_actual}: *${it.actualValue}*"
   }
-  return buildJiraFailureComment("${env.sonar_failure_slack_subtitle}: {quote}${fields.join('\n\n')}{quote}")
+  return buildJiraFailureComment("${env.sonar_failure_jira_title}: {quote}${fields.join('\n\n')}{quote}")
 }
 
 return this
