@@ -48,7 +48,7 @@ def buildDetailedFailureSonarJiraMessage(List failedConditions, String sonarDash
             comparator = env.sonar_failure_slack_comparator_lt
             break
     }
-    return "${it.metricKey.replaceAll('_', ' ')} ${env.sonar_failure_slack_failure_type_body_threshold} ${comparator} ${it.errorThreshold}. ${env.sonar_failure_slack_failure_type_body_actual}: ${it.actualValue}"
+    return "*${it.metricKey.replaceAll('_', ' ').capitalize()}* ${env.sonar_failure_slack_failure_type_body_threshold} ${comparator} *${it.errorThreshold}*. ${env.sonar_failure_slack_failure_type_body_actual}: *${it.actualValue}*"
   }
   return buildJiraFailureComment("${env.sonar_failure_slack_subtitle}: {quote}${fields.join('\n\n')}{quote}")
 }
