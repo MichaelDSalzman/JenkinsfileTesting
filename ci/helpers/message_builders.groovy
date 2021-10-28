@@ -1,5 +1,5 @@
 // TODO BETTER DOCS
-def generateSonarFailureDetailedSlackMessage(List failedConditions, String sonarDashboardUrl) {
+def buildDetailedSonarFailureSlackMessage(List failedConditions, String sonarDashboardUrl) {
   def fields = failedConditions.collect {
     def comparator = buildSonarComparators(it.comparator)
     return [
@@ -29,7 +29,7 @@ def buildJiraComment(String message) {
   return "${message} {quote}*Branch*: ${GIT_BRANCH} \n\n *Changeset:* ${GIT_COMMIT} \n\n*Environment:* ${env.ENV_NAME}{quote}"
 }
 
-def buildDetailedFailureSonarJiraMessage(List failedConditions, String sonarDashboardUrl) {
+def buildDetailedSonarFailureJiraMessage(List failedConditions, String sonarDashboardUrl) {
   def fields = failedConditions.collect {
     def comparator = buildSonarComparators(it.comparator)
     return "*${it.metricKey.replaceAll('_', ' ').capitalize()}*: ${env.sonar_failure_jira_failure_threshold} ${comparator} *${it.errorThreshold}*. ${env.sonar_failure_jira_failure_type_body_actual}: *${it.actualValue}*"

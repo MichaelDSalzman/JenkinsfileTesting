@@ -97,10 +97,10 @@ pipeline{
                 script {
                     sonarLib.scan({Map sonarResult ->
                         slackLib.sendDetailedMessage(
-                            messageBuilderLib.generateSonarFailureDetailedfailureMessage(sonarResult.failedConditions, sonarResult.dashboardUrl)
+                            messageBuilderLib.buildDetailedSonarFailureSlackMessage(sonarResult.failedConditions, sonarResult.dashboardUrl)
                         )
 
-                        jiraLib.addComment(jiraIssueId, messageBuilderLib.buildDetailedFailureSonarJiraMessage(sonarResult.failedConditions, sonarResult.dashboardUrl))
+                        jiraLib.addComment(jiraIssueId, messageBuilderLib.buildDetailedSonarFailureJiraMessage(sonarResult.failedConditions, sonarResult.dashboardUrl))
                             
                         sendGenericFailureMsg = false
                         error "Sonar Quality scan failed"
