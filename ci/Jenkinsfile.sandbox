@@ -9,7 +9,7 @@ def jiraLib
 def messageBuilderLib
 
 boolean sendGenericFailureMsg = true
-String slackMessage
+String failureMessage
 
 pipeline{
     agent any //TODO Waiting on Ops to create an appropriate worker.
@@ -49,7 +49,7 @@ pipeline{
             post{
                 failure{
                     script{
-                        slackMessage = env.slack_message_dependency_installation_failure
+                        failureMessage = env.slack_message_dependency_installation_failure
                     }
                 }
             }
@@ -61,7 +61,7 @@ pipeline{
             post{
                 failure{
                     script{
-                        slackMessage = env.slack_message_nexus_scan_failure
+                        failureMessage = env.slack_message_nexus_scan_failure
                     }
                 }
             }
@@ -74,7 +74,7 @@ pipeline{
             post{
                 failure{
                     script{
-                        slackMessage = env.slack_message_tests_failure
+                        failureMessage = env.slack_message_tests_failure
                     }
                 }
             }
@@ -86,7 +86,7 @@ pipeline{
                 //     def testResult = sh(script: "yarn test:unit", returnStatus: true)
                 //     if (testResult != 0) {
                 //         currentBuild.result = 'UNSTABLE'
-                //         slackMessage = env.slack_message_test_coverage_failure
+                //         failureMessage = env.slack_message_test_coverage_failure
                 //     }
                 // }             
             }
@@ -97,7 +97,7 @@ pipeline{
                 script {
                     sonarLib.scan({Map sonarResult ->
                         slackLib.sendDetailedMessage(
-                            messageBuilderLib.generateSonarFailureDetailedSlackMessage(sonarResult.failedConditions, sonarResult.dashboardUrl)
+                            messageBuilderLib.generateSonarFailureDetailedfailureMessage(sonarResult.failedConditions, sonarResult.dashboardUrl)
                         )
 
                         jiraLib.addComment(jiraIssueId, messageBuilderLib.buildDetailedFailureSonarJiraMessage(sonarResult.failedConditions, sonarResult.dashboardUrl))
@@ -110,7 +110,7 @@ pipeline{
             post{
                 failure{
                     script{
-                        slackMessage = env.slack_message_sonar_failure
+                        failureMessage = env.slack_message_sonar_failure
                     }
                 }
             }
@@ -122,7 +122,7 @@ pipeline{
             post{
                 failure{
                     script{
-                        slackMessage = env.slack_message_packaging_failure
+                        failureMessage = env.slack_message_packaging_failure
                     }
                 }
             }
@@ -137,7 +137,7 @@ pipeline{
             script {
                 currentBuild.result != 'UNSTABLE'
                     ? slackLib.success(env.slack_message_generic_success)
-                    : slackLib.warning(slackMessage ? slackMessage : env.slack_message_unexpected_failure)
+                    : slackLib.warning(failureMessage ? failureMessage : env.slack_message_unexpected_failure)
 
                 jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraSuccessComment())
             }
@@ -146,8 +146,9 @@ pipeline{
             echo "========pipeline execution failed========"
             script {
                 if(sendGenericFailureMsg) {
-                    slackLib.failure(slackMessage ? slackMessage : env.slack_message_unexpected_failure)
-                    jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraFailureComment(slackMessage ? slackMessage : env.slack_message_unexpected_failure))
+                    failureMessage = failureMessage ? failureMessage : env.slack_message_unexpected_failure
+                    slackLib.failure(failureMessage)
+                    jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraFailureComment(failureMessage))
                 }                
             }            
         }

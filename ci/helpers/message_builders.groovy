@@ -1,15 +1,7 @@
 // TODO BETTER DOCS
 def generateSonarFailureDetailedSlackMessage(List failedConditions, String sonarDashboardUrl) {
   def fields = failedConditions.collect {
-    def comparator = it.comparator
-    switch (comparator) {
-        case "GT":
-            comparator = env.sonar_failure_slack_comparator_gt
-            break
-        case "LT":
-            comparator = env.sonar_failure_slack_comparator_lt
-            break
-    }
+    def comparator = buildSonarComparators(it.comparator)
     return [
       title: "${env.sonar_failure_slack_failure_type_header}: ${it.metricKey.replaceAll('_', ' ')}", 
       value: "${env.sonar_failure_slack_failure_type_body_threshold} ${comparator} ${it.errorThreshold}\n${env.sonar_failure_slack_failure_type_body_actual}: ${it.actualValue}", 
@@ -39,18 +31,23 @@ def buildJiraComment(String message) {
 
 def buildDetailedFailureSonarJiraMessage(List failedConditions, String sonarDashboardUrl) {
   def fields = failedConditions.collect {
-    def comparator = it.comparator
-    switch (comparator) {
-        case "GT":
-            comparator = env.sonar_failure_jira_comparator_gt
-            break
-        case "LT":
-            comparator = env.sonar_failure_jira_comparator_lt
-            break
-    }
+    def comparator = buildSonarComparators(it.comparator)
     return "*${it.metricKey.replaceAll('_', ' ').capitalize()}*: ${env.sonar_failure_jira_failure_threshold} ${comparator} *${it.errorThreshold}*. ${env.sonar_failure_jira_failure_type_body_actual}: *${it.actualValue}*"
   }
   return buildJiraFailureComment("${env.sonar_failure_jira_title} ${sonarDashboardUrl} {quote}${fields.join('\n\n')}{quote}")
+}
+
+def buildSonarComparators(String comparator) {
+  switch (comparator) {
+    case "GT":
+      comparator = env.sonar_failure_comparator_gt
+      break
+    case "LT":
+      comparator = env.sonar_failure_comparator_lt
+      break
+  }
+
+  return comparator
 }
 
 return this
