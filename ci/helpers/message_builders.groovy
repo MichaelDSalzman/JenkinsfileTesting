@@ -50,7 +50,7 @@ def buildDetailedFailureSonarJiraMessage(List failedConditions, String sonarDash
     }
     return "*${it.metricKey.replaceAll('_', ' ').capitalize()}*: ${env.sonar_failure_jira_failure_threshold} ${comparator} *${it.errorThreshold}*. ${env.sonar_failure_jira_failure_type_body_actual}: *${it.actualValue}*"
   }
-  return buildJiraFailureComment("${env.sonar_failure_jira_title}: {quote}${fields.join('\n\n')}{quote}")
+  return buildJiraFailureComment("${env.sonar_failure_jira_title} ${sonarDashboardUrl} {quote}${fields.join('\n\n')}{quote}")
 }
 
 return this
