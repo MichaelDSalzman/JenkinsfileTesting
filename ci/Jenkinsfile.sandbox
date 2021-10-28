@@ -33,13 +33,13 @@ pipeline{
                 }
             }
         }
-        stage("testing jira comment") {
-            steps{
-                script {
-                    jiraLib.addComment(jiraIssueId, "Build {color:green}*completed*{color} {quote}*Branch*: ${GIT_BRANCH} \n\n *Changeset:* ${GIT_COMMIT} \n\n*Environment:* ${envName}{quote}")
-                }
-            }
-        }
+        // stage("testing jira comment") {
+        //     steps{
+        //         script {
+        //             jiraLib.addComment(jiraIssueId, "Build {color:green}*completed*{color} {quote}*Branch*: ${GIT_BRANCH} \n\n *Changeset:* ${GIT_COMMIT} \n\n*Environment:* ${envName}{quote}")
+        //         }
+        //     }
+        // }
         stage("Install dependencies"){
             steps{
                 echo "========Installing dependencies========"
@@ -136,6 +136,8 @@ pipeline{
                 currentBuild.result != 'UNSTABLE'
                     ? slackLib.success(env.slack_message_generic_success)
                     : slackLib.warning(slackMessage ? slackMessage : env.slack_message_unexpected_failure)
+
+                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraComment("green"))
             }
         }
         failure{
@@ -144,6 +146,8 @@ pipeline{
                 if(sendGenericFailureMsg) {
                     slackLib.failure(slackMessage ? slackMessage : env.slack_message_unexpected_failure)
                 }
+
+                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraComment("red", slackMessage ? slackMessage : env.slack_message_unexpected_failure))
             }            
         }
     }
