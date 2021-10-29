@@ -1,10 +1,24 @@
 // TODO BETTER DOCS
+public enum Comparators {
+    GT(env.sonar_failure_comparator_gt),
+    LT(env.sonar_failure_comparator_lt)
+
+    public final String description;
+
+    Comparators(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
+
 def buildDetailedSonarFailureSlackMessage(List failedConditions, String sonarDashboardUrl) {
   def fields = failedConditions.collect {
-    def comparator = buildSonarComparators(it.comparator)
     return [
       title: "${env.sonar_failure_slack_failure_type_header}: ${it.metricKey.replaceAll('_', ' ')}", 
-      value: "${env.sonar_failure_slack_failure_type_body_threshold} ${comparator} ${it.errorThreshold}\n${env.sonar_failure_slack_failure_type_body_actual}: ${it.actualValue}", 
+      value: "${env.sonar_failure_slack_failure_type_body_threshold} ${Comparators.valueOf(it.comparator).getDescription()} ${it.errorThreshold}\n${env.sonar_failure_slack_failure_type_body_actual}: ${it.actualValue}", 
       short: false
     ]
   }
@@ -31,23 +45,9 @@ def buildJiraComment(String message) {
 
 def buildDetailedSonarFailureJiraMessage(List failedConditions, String sonarDashboardUrl) {
   def fields = failedConditions.collect {
-    def comparator = buildSonarComparators(it.comparator)
-    return "*${it.metricKey.replaceAll('_', ' ').capitalize()}*: ${env.sonar_failure_jira_failure_threshold} ${comparator} *${it.errorThreshold}*. ${env.sonar_failure_jira_failure_type_body_actual}: *${it.actualValue}*"
+    return "*${it.metricKey.replaceAll('_', ' ').capitalize()}*: ${env.sonar_failure_jira_failure_threshold} ${Comparators.valueOf(it.comparator).getDescription()} *${it.errorThreshold}*. ${env.sonar_failure_jira_failure_type_body_actual}: *${it.actualValue}*"
   }
   return buildJiraFailureComment("${env.sonar_failure_jira_title} ${sonarDashboardUrl} {quote}${fields.join('\n\n')}{quote}")
-}
-
-def buildSonarComparators(String comparator) {
-  switch (comparator) {
-    case "GT":
-      comparator = env.sonar_failure_comparator_gt
-      break
-    case "LT":
-      comparator = env.sonar_failure_comparator_lt
-      break
-  }
-
-  return comparator
 }
 
 return this

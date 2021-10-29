@@ -7,6 +7,7 @@ def slackLib
 def sonarLib 
 def jiraLib
 def messageBuilderLib
+def jenkinLib
 
 boolean sendGenericFailureMsg = true
 String failureMessage
@@ -23,6 +24,7 @@ pipeline{
 
                     slackLib = load "ci/helpers/slack.groovy"
                     sonarLib = load "ci/helpers/sonar.groovy"
+                    jenkinLib = load "ci/helpers/jenkin.groovy"
                     jiraLib = load "ci/helpers/jira.groovy"
                     messageBuilderLib = load "ci/helpers/message_builders.groovy"
 
@@ -135,7 +137,7 @@ pipeline{
         success{
             echo "========pipeline executed successfully ========"
             script {
-                currentBuild.result != 'UNSTABLE'
+                currentBuild.result != jenkinLib.BuildStatuses.UNSTABLE.name()
                     ? slackLib.success(env.slack_message_generic_success)
                     : slackLib.warning(failureMessage ? failureMessage : env.slack_message_unexpected_failure)
 
