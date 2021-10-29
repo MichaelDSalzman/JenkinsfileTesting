@@ -3,9 +3,9 @@ enum Comparators {
     GT("${env.sonar_failure_comparator_gt}"),
     LT("${env.sonar_failure_comparator_lt}")
 
-    private final String description;
+    String description;
 
-    Comparators(String description) {
+    public Comparators(String description) {
         this.description = description;
     }
 
