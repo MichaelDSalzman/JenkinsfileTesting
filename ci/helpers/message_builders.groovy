@@ -3,15 +3,14 @@ enum Comparators {
     GT("sonar_failure_comparator_gt"),
     LT("sonar_failure_comparator_lt")
 
-    String description;
+    String descriptionConfigKey;
 
     public Comparators(String descriptionConfigKey) {
-        // this.description = env."${descriptionConfigKey}";
-        this.description = "HELLO WORLD"//env.sonar_failure_comparator_gt;
+        this.descriptionConfigKey = descriptionConfigKey;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescriptionConfigKey() {
+        return descriptionConfigKey;
     }
 }
 
@@ -19,7 +18,7 @@ def buildDetailedSonarFailureSlackMessage(List failedConditions, String sonarDas
   def fields = failedConditions.collect {
     return [
       title: "${env.sonar_failure_slack_failure_type_header}: ${it.metricKey.replaceAll('_', ' ')}", 
-      value: "${env.sonar_failure_slack_failure_type_body_threshold} ${Enum.valueOf(Comparators, it.comparator).getDescription()} ${it.errorThreshold}\n${env.sonar_failure_slack_failure_type_body_actual}: ${it.actualValue}", 
+      value: "${env.sonar_failure_slack_failure_type_body_threshold} ${env[Enum.valueOf(Comparators, it.comparator).getDescriptionConfigKey()]} ${it.errorThreshold}\n${env.sonar_failure_slack_failure_type_body_actual}: ${it.actualValue}", 
       short: false
     ]
   }
@@ -46,7 +45,7 @@ def buildJiraComment(String message) {
 
 def buildDetailedSonarFailureJiraMessage(List failedConditions, String sonarDashboardUrl) {
   def fields = failedConditions.collect {
-    return "*${it.metricKey.replaceAll('_', ' ').capitalize()}*: ${env.sonar_failure_jira_failure_threshold} ${Enum.valueOf(Comparators, it.comparator).getDescription()} *${it.errorThreshold}*. ${env.sonar_failure_jira_failure_type_body_actual}: *${it.actualValue}*"
+    return "*${it.metricKey.replaceAll('_', ' ').capitalize()}*: ${env.sonar_failure_jira_failure_threshold} ${env[Enum.valueOf(Comparators, it.comparator).getDescriptionConfigKey()]} *${it.errorThreshold}*. ${env.sonar_failure_jira_failure_type_body_actual}: *${it.actualValue}*"
   }
   return buildJiraFailureComment("${env.sonar_failure_jira_title} ${sonarDashboardUrl} {quote}${fields.join('\n\n')}{quote}")
 }
