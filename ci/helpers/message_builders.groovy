@@ -16,14 +16,10 @@ enum Comparators {
 
 def buildDetailedSonarFailureSlackMessage(List failedConditions, String sonarDashboardUrl) {
   def fields = failedConditions.collect {
-
-    def comparatorConfigKey = Enum.valueOf(Comparators, it.comparator).getDescriptionConfigKey()
-    def comparatorString = env."${comparatorConfigKey}"
-    echo "${it.comparator} = ${comparatorConfigKey} = ${comparatorString}"
     
     return [
       title: "${env.sonar_failure_slack_failure_type_header}: ${it.metricKey.replaceAll('_', ' ')}", 
-      value: "${env.sonar_failure_slack_failure_type_body_threshold} ${comparatorString} ${it.errorThreshold}\n${env.sonar_failure_slack_failure_type_body_actual}: ${it.actualValue}", 
+      value: "${env.sonar_failure_slack_failure_type_body_threshold} ${buildSonarComparators(it.comparator)} ${it.errorThreshold}\n${env.sonar_failure_slack_failure_type_body_actual}: ${it.actualValue}", 
       short: false
     ]
   }
@@ -50,12 +46,17 @@ def buildJiraComment(String message) {
 
 def buildDetailedSonarFailureJiraMessage(List failedConditions, String sonarDashboardUrl) {
   def fields = failedConditions.collect {
-    def comparatorConfigKey = Enum.valueOf(Comparators, it.comparator).getDescriptionConfigKey()
-    def comparatorString = env."${comparatorConfigKey}"
 
-    return "*${it.metricKey.replaceAll('_', ' ').capitalize()}*: ${env.sonar_failure_jira_failure_threshold} ${comparatorString} *${it.errorThreshold}*. ${env.sonar_failure_jira_failure_type_body_actual}: *${it.actualValue}*"
+    return "*${it.metricKey.replaceAll('_', ' ').capitalize()}*: ${env.sonar_failure_jira_failure_threshold} ${buildSonarComparators(it.comparator)} *${it.errorThreshold}*. ${env.sonar_failure_jira_failure_type_body_actual}: *${it.actualValue}*"
   }
   return buildJiraFailureComment("${env.sonar_failure_jira_title} ${sonarDashboardUrl} {quote}${fields.join('\n\n')}{quote}")
 }
+
+
+def buildSonarComparators(String comparator) {
+  def comparatorConfigKey = Enum.valueOf(Comparators, comparator).getDescriptionConfigKey()
+  return env."${comparatorConfigKey}"
+}
+
 
 return this

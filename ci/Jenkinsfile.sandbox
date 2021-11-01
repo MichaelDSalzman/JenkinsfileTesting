@@ -92,6 +92,7 @@ pipeline{
         stage("Unit && e2e Tests w/coverage"){
             steps{
                 echo "========executing unit && e2e tests w/coverage========"
+                currentBuild.result = BuildStatus.UNSTABLE
                 // script {
                 //     def testResult = sh(script: "yarn test:unit", returnStatus: true)
                 //     if (testResult != 0) {
