@@ -1,12 +1,12 @@
 // TODO BETTER DOCS
 enum Comparators {
-    GT("${env.sonar_failure_comparator_gt}"),
-    LT("${env.sonar_failure_comparator_lt}")
+    GT("sonar_failure_comparator_gt"),
+    LT("sonar_failure_comparator_lt")
 
     String description;
 
-    public Comparators(String description) {
-        this.description = description;
+    public Comparators(String descriptionConfigKey) {
+        this.description = config[descriptionConfigKey];
     }
 
     public String getDescription() {
