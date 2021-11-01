@@ -6,7 +6,7 @@ enum Comparators {
     String description;
 
     public Comparators(String descriptionConfigKey) {
-        this.description = env[descriptionConfigKey];
+        this.description = env."${descriptionConfigKey}";
     }
 
     public String getDescription() {
