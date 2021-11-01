@@ -139,21 +139,18 @@ pipeline{
             }
         }
     }
-    post{
-        always{
+    post {
+        always {
             echo "========always========"
         }
-        success{
+        success {
             echo "========pipeline executed successfully ========"
             script {
-                currentBuild.result != BuildStatus.UNSTABLE.name()
-                    ? slackLib.success(env.slack_message_generic_success)
-                    : slackLib.warning(failureMessage ? failureMessage : env.slack_message_unexpected_failure)
-
+                slackLib.success(env.slack_message_generic_success)
                 jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraSuccessComment())
             }
         }
-        failure{
+        failure {
             echo "========pipeline execution failed========"
             script {
                 if(sendGenericFailureMsg) {
@@ -162,6 +159,13 @@ pipeline{
                     jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraFailureComment(failureMessage))
                 }                
             }            
+        }
+        unstable {
+            echo "========pipeline executed unstable ========"
+            script {
+                slackLib.warning(failureMessage ? failureMessage : env.slack_message_unexpected_failure)
+                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraSuccessComment())
+            }
         }
     }
 }
