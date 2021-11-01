@@ -19,6 +19,7 @@ def buildDetailedSonarFailureSlackMessage(List failedConditions, String sonarDas
 
     def comparatorConfigKey = Enum.valueOf(Comparators, it.comparator).getDescriptionConfigKey()
     def comparatorString = env."${comparatorConfigKey}"
+    echo "${it.comparator} = ${comparatorConfigKey} = ${comparatorString}"
     
     return [
       title: "${env.sonar_failure_slack_failure_type_header}: ${it.metricKey.replaceAll('_', ' ')}", 
