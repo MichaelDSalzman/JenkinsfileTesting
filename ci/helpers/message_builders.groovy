@@ -41,7 +41,7 @@ def buildJiraFailureComment(String message = '') {
 }
 
 def buildJiraWarningComment(String message = '') {
-  return buildJiraComment("Build {color:yellow}*unstable*{color}\n\n ${message}")
+  return buildJiraComment("Build {color:orange}*unstable*{color}\n\n ${message}")
 }
 
 def buildJiraComment(String message) {
