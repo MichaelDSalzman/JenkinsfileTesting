@@ -7,7 +7,6 @@ enum Comparators {
 
     public Comparators(String descriptionConfigKey) {
         // this.description = env."${descriptionConfigKey}";
-        System.out.println("MIKE: ${env}")
         this.description = "HELLO WORLD"//env.sonar_failure_comparator_gt;
     }
 
