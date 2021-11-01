@@ -11,12 +11,14 @@ def messageBuilderLib
 boolean sendGenericFailureMsg = true
 String failureMessage
 
-enum BuildStatuses {
+enum BuildStatus {
     SUCCESS,
     UNSTABLE,
     FAILURE,
     NOT_BUILT,
     ABORTED
+
+    publi BuildStatus() {}
 }
 
 pipeline{
@@ -143,7 +145,7 @@ pipeline{
         success{
             echo "========pipeline executed successfully ========"
             script {
-                currentBuild.result != BuildStatuses.UNSTABLE.name()
+                currentBuild.result != BuildStatus.UNSTABLE.name()
                     ? slackLib.success(env.slack_message_generic_success)
                     : slackLib.warning(failureMessage ? failureMessage : env.slack_message_unexpected_failure)
 
