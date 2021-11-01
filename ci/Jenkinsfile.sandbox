@@ -92,14 +92,14 @@ pipeline{
         stage("Unit && e2e Tests w/coverage"){
             steps{
                 echo "========executing unit && e2e tests w/coverage========"
-                currentBuild.result = BuildStatus.UNSTABLE
-                // script {
+                script {
+                    currentBuild.result = BuildStatus.UNSTABLE.toString()
                 //     def testResult = sh(script: "yarn test:unit", returnStatus: true)
                 //     if (testResult != 0) {
                 //         currentBuild.result = 'UNSTABLE'
                 //         failureMessage = env.slack_message_test_coverage_failure
                 //     }
-                // }             
+                }             
             }
         }
         stage("SonarQube scan"){
