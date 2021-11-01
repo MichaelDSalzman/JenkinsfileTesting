@@ -40,6 +40,10 @@ def buildJiraFailureComment(String message = '') {
   return buildJiraComment("Build {color:red}*failed*{color}\n\n ${message}")
 }
 
+def buildJiraWarningComment(String message = '') {
+  return buildJiraComment("Build {color:yellow}*unstable*{color}\n\n ${message}")
+}
+
 def buildJiraComment(String message) {
   return "${message} {quote}*Branch*: ${GIT_BRANCH} \n\n *Changeset:* ${GIT_COMMIT} \n\n*Environment:* ${env.ENV_NAME}{quote}"
 }

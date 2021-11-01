@@ -155,17 +155,18 @@ pipeline{
             echo "========pipeline execution failed========"
             script {
                 if(sendGenericFailureMsg) {
-                    failureMessage = failureMessage ? failureMessage : env.slack_message_unexpected_failure
-                    slackLib.failure(failureMessage)
-                    jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraFailureComment(failureMessage))
+                    def message = failureMessage ? failureMessage : env.slack_message_unexpected_failure
+                    slackLib.failure(message)
+                    jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraFailureComment(message))
                 }                
             }            
         }
         unstable {
             echo "========pipeline executed unstable ========"
             script {
-                slackLib.warning(failureMessage ? failureMessage : env.slack_message_unexpected_failure)
-                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraSuccessComment())
+                def message = failureMessage ? failureMessage : env.slack_message_unexpected_failure
+                slackLib.warning(message)
+                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraWarningComment(message))
             }
         }
     }
