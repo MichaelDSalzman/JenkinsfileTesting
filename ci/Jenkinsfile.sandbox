@@ -94,6 +94,7 @@ pipeline{
                 echo "========executing unit && e2e tests w/coverage========"
                 script {
                     currentBuild.result = BuildStatus.UNSTABLE.toString()
+                    failureMessage = env.slack_message_test_coverage_failure
                 //     def testResult = sh(script: "yarn test:unit", returnStatus: true)
                 //     if (testResult != 0) {
                 //         currentBuild.result = 'UNSTABLE'
