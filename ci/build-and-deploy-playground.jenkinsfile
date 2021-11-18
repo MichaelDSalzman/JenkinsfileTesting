@@ -1,0 +1,173 @@
+def envName = "Sandbox"
+def envLanguage = "en"
+
+def jiraIssueId
+
+def slackLib
+def sonarLib 
+def jiraLib
+def messageBuilderLib
+
+boolean sendGenericFailureMsg = true
+String failureMessage
+
+enum BuildStatus {
+    SUCCESS,
+    UNSTABLE,
+    FAILURE,
+    NOT_BUILT,
+    ABORTED
+
+    public BuildStatus() {}
+}
+
+pipeline{
+    agent any //TODO Waiting on Ops to create an appropriate worker.
+  
+    stages{
+        stage("Init") {
+            steps{
+                echo "========Running init========"
+                script {
+                    load("ci/helpers/envLoader.groovy").load(envName, envLanguage)
+
+                    slackLib = load "ci/helpers/slack.groovy"
+                    sonarLib = load "ci/helpers/sonar.groovy"
+                    jiraLib = load "ci/helpers/jira.groovy"
+                    messageBuilderLib = load "ci/helpers/message_builders.groovy"
+
+                    jiraIssueId = jiraLib.findJiraIssueIdFromBranch()
+                    if(null == jiraIssueId) {
+                        error "NO JIRA ISSUE ID COULD BE FOUND IN THE BRANCH NAME"
+                    }
+                }
+            }
+        }
+        // stage("testing jira comment") {
+        //     steps{
+        //         script {
+        //             jiraLib.addComment(jiraIssueId, "Build {color:green}*completed*{color} {quote}*Branch*: ${GIT_BRANCH} \n\n *Changeset:* ${GIT_COMMIT} \n\n*Environment:* ${envName}{quote}")
+        //         }
+        //     }
+        // }
+        stage("Install dependencies"){
+            steps{
+                echo "========Installing dependencies========"
+                sh "npm install -g yarn"
+                sh "yarn install"
+            }
+            post{
+                failure{
+                    script{
+                        failureMessage = env.slack_message_dependency_installation_failure
+                    }
+                }
+            }
+        }
+        stage("NexusIQ Scan"){
+            steps{
+                echo "========executing NexusIQ scan========"
+            }
+            post{
+                failure{
+                    script{
+                        failureMessage = env.slack_message_nexus_scan_failure
+                    }
+                }
+            }
+        }
+        stage("Unit && e2e Tests w/o coverage"){
+            steps{
+                echo "========executing unit && e2e tests w/o coverage========"
+                // sh 'yarn test:unit'     
+            }
+            post{
+                failure{
+                    script{
+                        failureMessage = env.slack_message_tests_failure
+                    }
+                }
+            }
+        }
+        stage("Unit && e2e Tests w/coverage"){
+            steps{
+                echo "========executing unit && e2e tests w/coverage========"
+                script {
+                    currentBuild.result = BuildStatus.UNSTABLE.toString()
+                    failureMessage = env.slack_message_test_coverage_failure
+                //     def testResult = sh(script: "yarn test:unit", returnStatus: true)
+                //     if (testResult != 0) {
+                //         currentBuild.result = 'UNSTABLE'
+                //         failureMessage = env.slack_message_test_coverage_failure
+                //     }
+                }             
+            }
+        }
+        stage("SonarQube scan"){
+            steps{
+                echo "========executing SonarQube scan========"
+                script {
+                    sonarLib.scan({Map sonarResult ->
+                        slackLib.sendDetailedMessage(
+                            messageBuilderLib.buildDetailedSonarFailureSlackMessage(sonarResult.failedConditions, sonarResult.dashboardUrl)
+                        )
+
+                        jiraLib.addComment(jiraIssueId, messageBuilderLib.buildDetailedSonarFailureJiraMessage(sonarResult.failedConditions, sonarResult.dashboardUrl))
+                            
+                        sendGenericFailureMsg = false
+                        error "Sonar Quality scan failed"
+                    })
+                }
+            }
+            post{
+                failure{
+                    script{
+                        failureMessage = env.slack_message_sonar_failure
+                    }
+                }
+            }
+        }
+        stage("Package"){
+            steps{
+                echo "========Packaging========"
+            }
+            post{
+                failure{
+                    script{
+                        failureMessage = env.slack_message_packaging_failure
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo "========always========"
+        }
+        success {
+            echo "========pipeline executed successfully ========"
+            script {
+                slackLib.success(env.slack_message_generic_success)
+                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraSuccessComment())
+            }
+        }
+        failure {
+            echo "========pipeline execution failed========"
+            script {
+                if(sendGenericFailureMsg) {
+                    def message = failureMessage ? failureMessage : env.slack_message_unexpected_failure
+                    slackLib.failure(message)
+                    jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraFailureComment(message))
+                }                
+            }            
+        }
+        unstable {
+            echo "========pipeline executed unstable ========"
+            script {
+                def message = failureMessage ? failureMessage : env.slack_message_unexpected_failure
+                slackLib.warning(message)
+                jiraLib.addComment(jiraIssueId, messageBuilderLib.buildJiraWarningComment(message))
+            }
+        }
+    }
+}
