@@ -32,7 +32,7 @@ pipeline{
                         error "INVALID TAG"
                     }
 
-                    if(!isValidGitHash(params.GIT_HASH)) {
+                    if(!isValidGitHash(params.TEST_HASH)) {
                       error "INVALID GIT HASH"
                     }
                 }
