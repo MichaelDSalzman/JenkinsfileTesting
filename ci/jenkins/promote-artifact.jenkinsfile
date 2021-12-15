@@ -26,6 +26,7 @@ pipeline{
         stage("Parameter verification") {
             steps {
                 echo "========Verifying parameters========"
+                echo params.TEST_HASH
                 script {
                     if (!isValidTag(params.VERSION_TAG)) {
                         error "INVALID TAG"
