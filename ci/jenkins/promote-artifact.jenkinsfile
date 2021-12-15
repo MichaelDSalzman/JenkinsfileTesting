@@ -5,7 +5,7 @@ boolean isValidTag(String tag) {
 
 boolean isValidGitHash(String gitHash) {
   int successExitCode = 0
-  def exitCode = sh (returnStdout: true, script: "git branch --contains $gitHash | grep main")
+  def exitCode = sh (script: "git branch --contains $gitHash | grep main")
   echo "EXIT CODE $exitCode"
   return successExitCode == exitCode
 }
@@ -14,7 +14,7 @@ pipeline{
     agent any
   parameters {
     string(name: 'VERSION_TAG', description: "Specify environment for setup", trim: true)
-    string(name: 'GIT_HASH', description: "Specify environment for setup", trim: true)
+    gitParameter(name: 'GIT_HASH', type: 'PT_REVISION', description: 'sadfads', branch: 'main', quickFilterEnabled: true, defaultValue: '')
   }
     stages{
         stage("Init") {
