@@ -5,6 +5,8 @@ boolean isValidTag(String tag) {
 
 boolean isValidGitHash(String gitHash) {
   int successExitCode = 0
+  def exitCode = sh (returnStatus: true, script: "git branch --contains $gitHash | grep main")
+  echo "EXIT CODE $exitCode"
   return successExitCode == sh (returnStatus: true, script: "git branch --contains $gitHash | grep main")
 }
 
