@@ -14,7 +14,7 @@ pipeline{
     agent any
   parameters {
     string(name: 'VERSION_TAG', description: "Specify environment for setup", trim: true)
-    gitParameter(name: 'GIT_HASH', type: 'PT_REVISION', description: 'sadfads', branch: 'main', quickFilterEnabled: true, defaultValue: '')
+    gitParameter(name: 'GIT_HASH', type: 'PT_REVISION', description: 'sadfads', branch: 'main', quickFilterEnabled: true, defaultValue: '', branchFilter: '', selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '', useRepository: '', listSize: 0)
   }
     stages{
         stage("Init") {
@@ -26,13 +26,12 @@ pipeline{
         stage("Parameter verification") {
             steps {
                 echo "========Verifying parameters========"
-                echo params.TEST_HASH
                 script {
                     if (!isValidTag(params.VERSION_TAG)) {
                         error "INVALID TAG"
                     }
 
-                    if(!isValidGitHash(params.TEST_HASH)) {
+                    if(!isValidGitHash(params.GIT_HASH)) {
                       error "INVALID GIT HASH"
                     }
                 }
