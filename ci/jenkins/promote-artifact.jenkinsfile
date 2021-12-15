@@ -14,7 +14,7 @@ pipeline{
     agent any
   parameters {
     string(name: 'VERSION_TAG', description: "Specify environment for setup", trim: true)
-    gitParameter(name: 'GIT_HASH', type: 'PT_REVISION', description: 'sadfads', branch: 'main', quickFilterEnabled: true, defaultValue: '', branchFilter: '', selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '', useRepository: '', listSize: 0)
+    gitParameter(name: 'GIT_HASH', type: 'PT_REVISION', description: 'sadfads', branch: 'main', quickFilterEnabled: true, defaultValue: '', branchFilter: '', selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '', useRepository: '', listSize: '0')
   }
     stages{
         stage("Init") {
