@@ -1,0 +1,17 @@
+def slackLib
+
+pipeline{
+    agent any //TODO
+  
+    stages{
+        stage("Init") {
+            steps{
+                echo "========Running init========"
+                script {
+                    slackLib = load "ci/jenkins/nexus_repository.groovy"
+
+                }
+            }
+        }
+    }
+}
