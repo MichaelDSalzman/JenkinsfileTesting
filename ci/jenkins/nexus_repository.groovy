@@ -3,23 +3,23 @@ enum MavenRepoType {
   RELEASE
 }
 
-// class MavenRepo {
-//   private String name
-//   private MavenRepoType type
+class MavenRepo {
+  // private String name
+  // private MavenRepoType type
 
-//   public MavenRepo(String name, MavenRepoType type) {
-//     this.name = name
-//     this.type = type
-//   }
+  // public MavenRepo(String name, MavenRepoType type) {
+  //   this.name = name
+  //   this.type = type
+  // }
 
-//   public String getName() {
-//     return name
-//   }
+  // public String getName() {
+  //   return name
+  // }
 
-//   public MavenRepoType getType() {
-//     return type
-//   }
-// }
+  // public MavenRepoType getType() {
+  //   return type
+  // }
+}
 
 // class MavenArtifact {
 //   private MavenRepo repo
