@@ -1,6 +1,8 @@
 enum MavenRepoType {
   SNAPSHOT,
   RELEASE
+
+  public MavenRepoType() {}
 }
 
 class MavenRepo {
