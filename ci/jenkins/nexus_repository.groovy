@@ -50,7 +50,7 @@ class MavenArtifact {
 }
 
 MavenRepo constructMavenRepo(String name, boolean isSnapshot) {
-  return new MavenRepo(name, isSnapshot ? MavenRepoType.SNAPSHOT, MavenRepoType.RELEASE)
+  return new MavenRepo(name, isSnapshot ? MavenRepoType.SNAPSHOT: MavenRepoType.RELEASE)
 }
 
 MavenArtifact constructMavenArtifact(MavenRepo repo, String groupId, String artifactId, String artifactVersion) {
