@@ -93,25 +93,28 @@ void uploadArtifact(String sourceFile, MavenArtifact artifact) {
 }
 
 void downloadArtifact(MavenArtifact artifact, String destination) {
-  artifactVersion = artifactVersionRename(artifact.getArtifactVersion(), artifact.getRepo().getType())
 
-  container('manage-jdk8-npm') {
-    configFileProvider([configFile(fileId: 'maven-settings', variable: 'MAVEN_SETTINGS_XML')]) {
+  echo artifact.toString()
+  echo destination
+  // artifactVersion = artifactVersionRename(artifact.getArtifactVersion(), artifact.getRepo().getType())
 
-      String fileName = "${artifact.getArtifactId()}-${artifact.getArtifactVersion()}.zip"
+  // container('manage-jdk8-npm') {
+  //   configFileProvider([configFile(fileId: 'maven-settings', variable: 'MAVEN_SETTINGS_XML')]) {
 
-      sh """
-        mkdir -p ${WORKSPACE}/download
-        mvn dependency:get \
-        -DrepositoryId=${artifact.getRepo().getName()} \
-        -Dartifact=${artifact.getGroupId()}:${artifact.getArtifactId()}:${artifact.getArtifactVersion()}:zip \
-        -Dtransitive=false \
-        -Ddest=${destination} \
-        -DremoteRepositories=https://nexus.aws.enlightedinc.com/repository/${artifact.getRepo().getName()}/ \
-        -s $MAVEN_SETTINGS_XML
-      """
-    }
-  }
+  //     String fileName = "${artifact.getArtifactId()}-${artifact.getArtifactVersion()}.zip"
+
+  //     sh """
+  //       mkdir -p ${WORKSPACE}/download
+  //       mvn dependency:get \
+  //       -DrepositoryId=${artifact.getRepo().getName()} \
+  //       -Dartifact=${artifact.getGroupId()}:${artifact.getArtifactId()}:${artifact.getArtifactVersion()}:zip \
+  //       -Dtransitive=false \
+  //       -Ddest=${destination} \
+  //       -DremoteRepositories=https://nexus.aws.enlightedinc.com/repository/${artifact.getRepo().getName()}/ \
+  //       -s $MAVEN_SETTINGS_XML
+  //     """
+  //   }
+  // }
 }
 
 void deleteRemoteArtifact(MavenArtifact artifact) {
