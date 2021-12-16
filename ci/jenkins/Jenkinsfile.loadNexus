@@ -8,9 +8,9 @@ pipeline{
             steps{
                 echo "========Running init========"
                 script {
-                    slackLib = load "ci/jenkins/nexus_repository.groovy"
-
-                }
+                  nexusLib = load "ci/jenkins/nexus_repository.groovy"
+                    a = nexusLib.construct()
+                    echo "${a.getName()} - ${a.getType()}"                }
             }
         }
     }
