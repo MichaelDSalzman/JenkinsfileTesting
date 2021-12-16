@@ -50,7 +50,7 @@ class MavenArtifact {
 }
 
 MavenRepo constructMavenRepo(String name, boolean isSnapshot) {
-  return new MavenRepo(name, isSnapshot ? Enum.valueOf('SNAPSHOT'): Enum.valueOf('RELEASE')
+  return new MavenRepo(name, isSnapshot ? Enum.valueOf('SNAPSHOT') : Enum.valueOf('RELEASE'))
 }
 
 MavenArtifact constructMavenArtifact(MavenRepo repo, String groupId, String artifactId, String artifactVersion) {
