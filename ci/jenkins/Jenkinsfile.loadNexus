@@ -9,6 +9,8 @@ pipeline{
                 echo "========Running init========"
                 script {
                   nexusLib = load "ci/jenkins/nexus_repository.groovy"
+
+                  nexusLib.MavenRepo a
                     repo = nexusLib.constructMavenRepo('asdf', true)
                     echo "${repo.getName()} - ${repo.getType()}"
 
