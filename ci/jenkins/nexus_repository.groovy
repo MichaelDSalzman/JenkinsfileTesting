@@ -21,10 +21,6 @@ class MavenRepo {
   }
 }
 
-
-MavenRepo construct() {
-    return new MavenRepo('snapshot', MavenRepoType.SNAPSHOT)
-}
 class MavenArtifact {
   private MavenRepo repo
   private String groupId
@@ -51,6 +47,14 @@ class MavenArtifact {
   public String getArtifactVersion() {
     return artifactVersion
   }
+}
+
+MavenRepo constructMavenRepo(String name, boolean isSnapshot) {
+  return new MavenRepo(name, isSnapshot ? MavenRepoType.SNAPSHOT, MavenRepoType.RELEASE)
+}
+
+MavenArtifact constructMavenArtifact(MavenRepo repo, String groupId, String artifactId, String artifactVersion) {
+  return new MavenArtifact(repo, groupId, artifactId, artifactVersion)
 }
 
 String artifactVersionRename(String artifactVersion, MavenRepoType repoType) {
