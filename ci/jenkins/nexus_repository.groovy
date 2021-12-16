@@ -12,13 +12,13 @@ class MavenRepo {
     this.type = type
   }
 
-  // public String getName() {
-  //   return name
-  // }
+  public String getName() {
+    return name
+  }
 
-  // public MavenRepoType getType() {
-  //   return type
-  // }
+  public MavenRepoType getType() {
+    return type
+  }
 }
 
 // class MavenArtifact {
