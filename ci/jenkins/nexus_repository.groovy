@@ -22,41 +22,41 @@ class MavenRepo {
   // }
 }
 
-// class MavenArtifact {
-//   private MavenRepo repo
-//   private String groupId
-//   private String artifactId
-//   private String artifactVersion
+class MavenArtifact {
+  private MavenRepo repo
+  private String groupId
+  private String artifactId
+  private String artifactVersion
 
-//   public MavenArtifact(MavenRepo repo, String groupId, String artifactId, String artifactVersion) {
-//     this.repo = repo
-//     this.groupId = groupId
-//     this.artifactId = artifactId
-//     this.artifactVersion = artifactVersion
-//   }
+  public MavenArtifact(MavenRepo repo, String groupId, String artifactId, String artifactVersion) {
+    this.repo = repo
+    this.groupId = groupId
+    this.artifactId = artifactId
+    this.artifactVersion = artifactVersion
+  }
 
-//   public MavenRepo getRepo() {
-//     return repo
-//   }
+  public MavenRepo getRepo() {
+    return repo
+  }
 
-//   public String getGroupId() {
-//     return groupId
-//   }
-//   public String getArtifactId() {
-//     return artifactId
-//   }
-//   public String getArtifactVersion() {
-//     return artifactVersion
-//   }
-// }
+  public String getGroupId() {
+    return groupId
+  }
+  public String getArtifactId() {
+    return artifactId
+  }
+  public String getArtifactVersion() {
+    return artifactVersion
+  }
+}
 
 MavenRepo constructMavenRepo(String name, boolean isSnapshot) {
   return new MavenRepo(name)//, isSnapshot ? MavenRepoType.SNAPSHOT: MavenRepoType.RELEASE)
 }
 
-// MavenArtifact constructMavenArtifact(MavenRepo repo, String groupId, String artifactId, String artifactVersion) {
-//   return new MavenArtifact(repo, groupId, artifactId, artifactVersion)
-// }
+MavenArtifact constructMavenArtifact(MavenRepo repo, String groupId, String artifactId, String artifactVersion) {
+  return new MavenArtifact(repo, groupId, artifactId, artifactVersion)
+}
 
 // String artifactVersionRename(String artifactVersion, MavenRepoType repoType) {
 //   return MavenRepoType.SNAPSHOT == repoType ? "$artifactVersion-SNAPSHOT" : artifactVersion
@@ -93,30 +93,30 @@ MavenRepo constructMavenRepo(String name, boolean isSnapshot) {
 //   }
 // }
 
-// void downloadArtifact(MavenArtifact artifact, String destination) {
+void downloadArtifact(MavenArtifact artifact, String destination) {
 
-//   echo "${artifact.getGroupId()} - ${artifact.getArtifactId()} - ${artifact.getArtifactVersion()}"
-//   echo destination
-//   // artifactVersion = artifactVersionRename(artifact.getArtifactVersion(), artifact.getRepo().getType())
+  echo "${artifact.getGroupId()} - ${artifact.getArtifactId()} - ${artifact.getArtifactVersion()}"
+  echo destination
+  // artifactVersion = artifactVersionRename(artifact.getArtifactVersion(), artifact.getRepo().getType())
 
-//   // container('manage-jdk8-npm') {
-//   //   configFileProvider([configFile(fileId: 'maven-settings', variable: 'MAVEN_SETTINGS_XML')]) {
+  // container('manage-jdk8-npm') {
+  //   configFileProvider([configFile(fileId: 'maven-settings', variable: 'MAVEN_SETTINGS_XML')]) {
 
-//   //     String fileName = "${artifact.getArtifactId()}-${artifact.getArtifactVersion()}.zip"
+  //     String fileName = "${artifact.getArtifactId()}-${artifact.getArtifactVersion()}.zip"
 
-//   //     sh """
-//   //       mkdir -p ${WORKSPACE}/download
-//   //       mvn dependency:get \
-//   //       -DrepositoryId=${artifact.getRepo().getName()} \
-//   //       -Dartifact=${artifact.getGroupId()}:${artifact.getArtifactId()}:${artifact.getArtifactVersion()}:zip \
-//   //       -Dtransitive=false \
-//   //       -Ddest=${destination} \
-//   //       -DremoteRepositories=https://nexus.aws.enlightedinc.com/repository/${artifact.getRepo().getName()}/ \
-//   //       -s $MAVEN_SETTINGS_XML
-//   //     """
-//   //   }
-//   // }
-// }
+  //     sh """
+  //       mkdir -p ${WORKSPACE}/download
+  //       mvn dependency:get \
+  //       -DrepositoryId=${artifact.getRepo().getName()} \
+  //       -Dartifact=${artifact.getGroupId()}:${artifact.getArtifactId()}:${artifact.getArtifactVersion()}:zip \
+  //       -Dtransitive=false \
+  //       -Ddest=${destination} \
+  //       -DremoteRepositories=https://nexus.aws.enlightedinc.com/repository/${artifact.getRepo().getName()}/ \
+  //       -s $MAVEN_SETTINGS_XML
+  //     """
+  //   }
+  // }
+}
 
 // void deleteRemoteArtifact(MavenArtifact artifact) {
 //   withCredentials([usernamePassword(credentialsId: 'jenkins-nexus', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
