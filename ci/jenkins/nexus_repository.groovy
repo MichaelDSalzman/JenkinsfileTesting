@@ -94,7 +94,7 @@ void uploadArtifact(String sourceFile, MavenArtifact artifact) {
 
 void downloadArtifact(MavenArtifact artifact, String destination) {
 
-  echo artifact.toString()
+  echo "${artifact.getGroupId()} - ${artifact.getArtifactId()} - ${artifact.getArtifactId()}"
   echo destination
   // artifactVersion = artifactVersionRename(artifact.getArtifactVersion(), artifact.getRepo().getType())
 
