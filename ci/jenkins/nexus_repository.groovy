@@ -7,10 +7,10 @@ class MavenRepo {
   private String name
   private MavenRepoType type
 
-  // public MavenRepo(String name, MavenRepoType type) {
-  //   this.name = name
-  //   this.type = type
-  // }
+  public MavenRepo(String name, MavenRepoType type) {
+    this.name = name
+    this.type = type
+  }
 
   // public String getName() {
   //   return name
