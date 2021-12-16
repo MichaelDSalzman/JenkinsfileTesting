@@ -90,7 +90,7 @@ void downloadArtifact(MavenArtifact artifact, String destination) {
   container('manage-jdk8-npm') {
     configFileProvider([configFile(fileId: 'maven-settings', variable: 'MAVEN_SETTINGS_XML')]) {
 
-      String fileName = "${artifact.getArtifactId()}-${artifact.getArtifactVersion())}.zip"
+      String fileName = "${artifact.getArtifactId()}-${artifact.getArtifactVersion()}.zip"
 
       sh """
         mkdir -p ${WORKSPACE}/download
