@@ -5,20 +5,21 @@ enum MavenRepoType {
 
 class MavenRepo {
   private String name
-  private MavenRepoType type
+  // private MavenRepoType type
 
-  public MavenRepo(String name, MavenRepoType type) {
+  // public MavenRepo(String name, MavenRepoType type) {
+  public MavenRepo(String name) {
     this.name = name
-    this.type = type
+    // this.type = type
   }
 
   public String getName() {
     return name
   }
 
-  public MavenRepoType getType() {
-    return type
-  }
+  // public MavenRepoType getType() {
+  //   return type
+  // }
 }
 
 // class MavenArtifact {
@@ -49,8 +50,12 @@ class MavenRepo {
 //   }
 // }
 
-MavenRepo constructMavenRepo(String name, boolean isSnapshot) {
-  return new MavenRepo(name, isSnapshot ? MavenRepoType.SNAPSHOT: MavenRepoType.RELEASE)
+// MavenRepo constructMavenRepo(String name, boolean isSnapshot) {
+//   return new MavenRepo(name, isSnapshot ? MavenRepoType.SNAPSHOT: MavenRepoType.RELEASE)
+// }
+
+MavenRepo constructMavenRepo(String name) {
+  return new MavenRepo(name)
 }
 
 // MavenArtifact constructMavenArtifact(MavenRepo repo, String groupId, String artifactId, String artifactVersion) {
