@@ -49,9 +49,9 @@ class MavenRepo {
 //   }
 // }
 
-// MavenRepo constructMavenRepo(String name, boolean isSnapshot) {
-//   return new MavenRepo(name, isSnapshot ? MavenRepoType.SNAPSHOT: MavenRepoType.RELEASE)
-// }
+MavenRepo constructMavenRepo(String name, boolean isSnapshot) {
+  return new MavenRepo(name, isSnapshot ? MavenRepoType.SNAPSHOT: MavenRepoType.RELEASE)
+}
 
 // MavenArtifact constructMavenArtifact(MavenRepo repo, String groupId, String artifactId, String artifactVersion) {
 //   return new MavenArtifact(repo, groupId, artifactId, artifactVersion)
