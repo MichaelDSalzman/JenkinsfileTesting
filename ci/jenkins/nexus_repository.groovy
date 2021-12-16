@@ -5,7 +5,7 @@ enum MavenRepoType {
 
 class MavenRepo {
   private String name
-  // private MavenRepoType type
+  private MavenRepoType type
 
   // public MavenRepo(String name, MavenRepoType type) {
   //   this.name = name
