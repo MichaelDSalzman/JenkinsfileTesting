@@ -10,7 +10,7 @@ pipeline{
                 script {
                   nexusLib = load "ci/jenkins/nexus_repository.groovy"
                     repo = nexusLib.constructMavenRepo('asdf', true)
-                    echo "${repo.getName()}"// - ${repo.getType()}"
+                    echo "${repo.getName()} - ${repo.getType()}"
 
                     artifact = nexusLib.constructMavenArtifact(repo, "group", "artifact", "id")
 
