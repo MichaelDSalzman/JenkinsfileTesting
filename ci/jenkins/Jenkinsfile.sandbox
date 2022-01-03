@@ -2,7 +2,7 @@
 def someEnums
 
 boolean shouldExecuteStage(def pipelineStage) {
-    return env.BUILD_STEPS_TO_INCLUDE.contains(pipelineStage.toString())
+    return env.BUILD_STEPS_TO_INCLUDE.tokenize(',[]').collect{it.trim()}.contains(pipelineStage.toString())
 }
 
 pipeline{
