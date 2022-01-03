@@ -1,7 +1,4 @@
-def slackLib
 def someEnums
-
-def BUILD_STEPS_TO_INCLUDE = []
 
 pipeline{
     agent any //TODO
@@ -11,25 +8,16 @@ pipeline{
             steps{
                 echo "========Running init========"
                 script {
-                    slackLib = load "ci/jenkins/slack.groovy"
                     someEnums = load("ci/jenkins/someEnums.groovy")
 
-                    String fName = "MIKE"
-                    String lName = "SALZMAN"
-
-                    fullName = [fName, lName].join(", ")
-
-                    echo "${fullName}"
-
-
-                    BUILD_STEPS_TO_INCLUDE.add(someEnums.BuildPipelineSteps.INSTALL_DEPS)
+                    load("ci/jenkins.env.groovy")
                 }
             }
         }
         stage("Install dependencies"){
             when {
                 expression {
-                    return BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.INSTALL_DEPS)
+                    return env.BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.INSTALL_DEPS)
                 }
             }
             steps{
@@ -41,7 +29,7 @@ pipeline{
         stage("Unit Test"){
             when {
                 expression {
-                    return BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.UNIT_TEST)
+                    return env.BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.UNIT_TEST)
                 }
             }
             steps{
