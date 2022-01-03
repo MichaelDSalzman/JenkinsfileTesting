@@ -1,4 +1,5 @@
+def loadProps(def enums) {
+  env.BUILD_STEPS_TO_INCLUDE=[enums.BuildPipelineSteps.INSTALL_DEPS]
+}
 
-someEnums = load("ci/jenkins/someEnums.groovy")
-
-env.BUILD_STEPS_TO_INCLUDE=[someEnums.BuildPipelineSteps.INSTALL_DEPS]
+return this
