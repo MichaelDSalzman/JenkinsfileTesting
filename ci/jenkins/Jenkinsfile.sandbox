@@ -42,5 +42,15 @@ pipeline{
                 echo "========UNIT TEST========"
             }
         }
+        stage("Unit Test w coverage"){
+            when {
+                expression {
+                    return shouldExecuteStage(someEnums.BuildPipelineSteps.UNIT_TEST_COVERAGE)
+                }
+            }
+            steps{
+                echo "========UNIT TEST========"
+            }
+        }
     }
 }
