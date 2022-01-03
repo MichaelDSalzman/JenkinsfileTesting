@@ -18,7 +18,7 @@ pipeline{
         stage("Install dependencies"){
             when {
                 expression {
-                    return env.BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.INSTALL_DEPS)
+                    return env.BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.INSTALL_DEPS.toString())
                 }
             }
             steps{
@@ -30,7 +30,7 @@ pipeline{
         stage("Unit Test"){
             when {
                 expression {
-                    return env.BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.UNIT_TEST)
+                    return env.BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.UNIT_TEST.toString())
                 }
             }
             steps{
