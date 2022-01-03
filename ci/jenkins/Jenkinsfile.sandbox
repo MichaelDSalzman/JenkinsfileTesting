@@ -37,18 +37,15 @@ pipeline{
                 sh "pwd"
                 sh "ls -ltr"
             }
-
-            //TODO Leaving this as an example
-            post{
-                always{
-                    echo "========always========"
+        }
+        stage("Unit Test"){
+            when {
+                expression {
+                    return BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.UNIT_TEST)
                 }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
+            }
+            steps{
+                echo "========UNIT TEST========"
             }
         }
     }
