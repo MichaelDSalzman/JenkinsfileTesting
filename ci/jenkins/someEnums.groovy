@@ -5,4 +5,6 @@ enum BuildPipelineSteps {
   public BuildPipelineSteps() {}
 }
 
+this.BuildPipelineSteps = BuildPipelineSteps
+
 return this
