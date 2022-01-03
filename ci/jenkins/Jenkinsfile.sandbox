@@ -10,7 +10,7 @@ pipeline{
                 script {
                     someEnums = load("ci/jenkins/someEnums.groovy")
 
-                    load("ci/jenkins.env.groovy")
+                    load("ci/jenkins/env.groovy")
                 }
             }
         }
