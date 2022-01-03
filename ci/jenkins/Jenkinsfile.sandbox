@@ -1,4 +1,7 @@
 def slackLib
+def someEnums
+
+def BUILD_STEPS_TO_INCLUDE = []
 
 pipeline{
     agent any //TODO
@@ -9,6 +12,7 @@ pipeline{
                 echo "========Running init========"
                 script {
                     slackLib = load "ci/jenkins/slack.groovy"
+                    someEnums = load("ci/jenkins/someEnums.groovy")
 
                     String fName = "MIKE"
                     String lName = "SALZMAN"
@@ -20,6 +24,11 @@ pipeline{
             }
         }
         stage("Install dependencies"){
+            when {
+                expression {
+                    return BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.INSTALL_DEPS)
+                }
+            }
             steps{
                 echo "========Installing dependencies========"
                 sh "pwd"
@@ -39,42 +48,5 @@ pipeline{
                 }
             }
         }
-        stage("NexusIQ Scan"){
-            steps{
-                echo "========executing NexusIQ scan========"
-            }
-        }
-        stage("Unit test"){
-            steps{
-                echo "========executing unit tests======== ${params}"
-            }
-        }
-        stage("SonarQube scan"){
-            steps{
-                echo "========executing SonarQube scan======== ${params}"
-            }
-        }
-        stage("Package"){
-            steps{
-                echo "========Packaging======== ${params}"
-            }
-        }
-    }
-    post{
-        always{
-            echo "========always========"
-        }
-        success{
-            echo "========pipeline executed successfully ========"
-            script {
-                slackLib.sendSuccessMessage()
-            }
-        }
-        failure{
-            echo "========pipeline execution failed========"
-            script {
-                slackLib.sendFailureMessage()
-            }
-        }
-    }
+    }Å
 }
