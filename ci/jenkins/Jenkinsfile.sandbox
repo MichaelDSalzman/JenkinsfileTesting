@@ -1,4 +1,6 @@
-def someEnums
+
+import org.foo.BuildPipelineSteps
+// def someEnums
 
 pipeline{
     agent any //TODO
@@ -8,16 +10,17 @@ pipeline{
             steps{
                 echo "========Running init========"
                 script {
-                    someEnums = load("ci/jenkins/someEnums.groovy")
+                    // someEnums = load("ci/jenkins/someEnums.groovy")
 
-                    load("ci/jenkins/env.groovy")
+                    // load("ci/jenkins/env.groovy")
+                    env.BUILD_STEPS_TO_INCLUDE = []
                 }
             }
         }
         stage("Install dependencies"){
             when {
                 expression {
-                    return env.BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.INSTALL_DEPS)
+                    return env.BUILD_STEPS_TO_INCLUDE.contains(BuildPipelineSteps.INSTALL_DEPS)
                 }
             }
             steps{
@@ -29,7 +32,7 @@ pipeline{
         stage("Unit Test"){
             when {
                 expression {
-                    return env.BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.UNIT_TEST)
+                    return env.BUILD_STEPS_TO_INCLUDE.contains(BuildPipelineSteps.UNIT_TEST)
                 }
             }
             steps{
