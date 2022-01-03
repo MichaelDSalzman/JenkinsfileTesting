@@ -20,6 +20,9 @@ pipeline{
                     fullName = [fName, lName].join(", ")
 
                     echo "${fullName}"
+
+
+                    BUILD_STEPS_TO_INCLUDE.add(someEnums.BuildPipelineSteps.INSTALL_DEPS)
                 }
             }
         }
