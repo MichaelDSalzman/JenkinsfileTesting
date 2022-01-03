@@ -1,6 +1,10 @@
 
 def someEnums
 
+boolean shouldExecuteStage(def pipelineStage) {
+    return env.BUILD_STEPS_TO_INCLUDE.contains(pipelineStage.toString())
+}
+
 pipeline{
     agent any //TODO
   
@@ -12,13 +16,14 @@ pipeline{
                     someEnums = load("ci/jenkins/someEnums.groovy")
 
                     load("ci/jenkins/env.groovy").loadProps(someEnums)
+                    echo env.BUILD_STEPS_TO_INCLUDE
                 }
             }
         }
         stage("Install dependencies"){
             when {
                 expression {
-                    return env.BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.INSTALL_DEPS.toString())
+                    return shouldExecuteStage(someEnums.BuildPipelineSteps.INSTALL_DEPS)
                 }
             }
             steps{
@@ -30,7 +35,7 @@ pipeline{
         stage("Unit Test"){
             when {
                 expression {
-                    return env.BUILD_STEPS_TO_INCLUDE.contains(someEnums.BuildPipelineSteps.UNIT_TEST.toString())
+                    return shouldExecuteStage(someEnums.BuildPipelineSteps.UNIT_TEST)
                 }
             }
             steps{
