@@ -5,7 +5,8 @@ pipeline{
         stage("Install dependencies"){
             steps{
                 script {
-                    load("helper/test.groovy").echoHelloWorld()
+                    echo "HI"
+                    // load("ci/helper/test.groovy").echoHelloWorld()
                 }
             }
             
