@@ -1,7 +1,7 @@
 String defaultHeader = ''
 
 void setDefaultHeader(String header) {
-  this.defaultHeader = header
+  defaultHeader = header
 }
 
 void printDefaultHeader() {
