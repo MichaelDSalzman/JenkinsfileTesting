@@ -5,8 +5,9 @@ pipeline{
         stage("Where am I?"){
             steps{
                 script {
-                    currentTag = sh(script: 'git tag --points-at HEAD', returnStdout: true)
-                    echo currentTag
+                    def defaultHeader = load('./defaultHeader.groovy')
+                    defaultHeader.setDefaultHeader("HELLO WORLD!")
+                    defaultHeader.printDefaultHeader()
                 }
             }
         }
